@@ -30,10 +30,9 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String nome;
-    @Column(nullable = false, unique = true, length = 11)
+    @Column(nullable = false, unique = true)
     @NotBlank
-    @CPF
-    private String cpf;
+    private String documento; // cpf, cnpj...
     @Column(nullable = false)
     @NotBlank
     private String telefone;
