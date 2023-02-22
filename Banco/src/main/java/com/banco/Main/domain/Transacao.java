@@ -22,6 +22,8 @@ public class Transacao {
     private Double valor;
     private LocalDateTime dataTransacao;
     private TipoTransacao tipoTransacao; /// PIX, TED, DOC;
+    private String contaOrigim;
+    private String contaDestino;
 
     @ManyToOne
     @JoinColumn(name = "transacoesId")
