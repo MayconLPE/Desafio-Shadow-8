@@ -1,5 +1,6 @@
 package com.banco.Main.domain;
 
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,7 +21,7 @@ public class Transacao {
     private String id;
     private Double valor;
     private LocalDateTime dataTransacao;
-
+    private TipoTransacao tipoTransacao; /// PIX, TED, DOC;
 
     @ManyToOne
     @JoinColumn(name = "transacoesId")
