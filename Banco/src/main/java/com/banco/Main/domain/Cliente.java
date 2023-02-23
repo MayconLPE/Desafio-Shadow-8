@@ -1,12 +1,15 @@
 package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoCliente.Endereco;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -31,6 +34,8 @@ public class Cliente  implements Serializable {
     @NotBlank
     private String nome;
     @Column(nullable = false, unique = true)
+//    @Min(value = 11, message = "Valor deve ser maior que 1") // Para cpf
+//    @Max(value = 14, message = "Valor deve ser menor que 9") // Para cnpj
     @NotBlank
     private String documento; // cpf, cnpj...
     @Column(nullable = false)
@@ -43,12 +48,13 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String senha;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime registroCadastro;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Endereco> enderecos = new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}) // Um cliente para muitas Contas
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Conta> contas = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private List<Transacao> transacoes = new ArrayList<>();

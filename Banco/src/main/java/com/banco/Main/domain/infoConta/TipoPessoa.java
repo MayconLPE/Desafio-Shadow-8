@@ -1,6 +1,6 @@
 package com.banco.Main.domain.infoConta;
 
-public enum TipoConta {
+public enum TipoPessoa {
     PJ, PF, GOV;
 
 }

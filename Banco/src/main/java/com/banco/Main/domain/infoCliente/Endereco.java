@@ -44,8 +44,8 @@ public class Endereco implements Serializable {
     private String uf;
     private String infoAdcional; // Trabalho ou casa
 
-//    @ManyToOne // Muitos enderecos para um Cliente
-//    @JoinColumn(name = "enderecoId") // coluna que vai ser chave primaria
-//    private Cliente cliente;
+    @ManyToOne // Muitos enderecos para um Cliente
+    @JoinColumn(name = "enderecoId") // coluna que vai ser chave primaria
+    private Cliente cliente;
 
 }
