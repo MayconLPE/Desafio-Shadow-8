@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "CLIENTES")
+@Table(name = "CLIENTE")
 @Entity
 public class Cliente  implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -46,12 +46,12 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     private LocalDateTime registroCadastro;
 
-    @OneToMany(mappedBy = "cliente") // Um cliente para muitas Contas
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Endereco> enderecos = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}) // Um cliente para muitas Contas
     private List<Conta> contas = new ArrayList<>();
-    @OneToMany(mappedBy = "cliente")
-    private List<Endereco> enderecos;
-    @OneToMany(mappedBy = "cliente")
-    private List<Transacao> transacoes;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    private List<Transacao> transacoes = new ArrayList<>();
 
 
 }

@@ -25,7 +25,7 @@ public class Transacao {
     private String contaOrigim;
     private String contaDestino;
 
-    @ManyToOne
-    @JoinColumn(name = "transacoesId")
-    private Cliente cliente;
+//    @ManyToOne
+//    @JoinColumn(name = "transacoesId")
+//    private Cliente cliente;
 }

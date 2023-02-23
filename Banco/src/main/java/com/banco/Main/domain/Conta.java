@@ -31,20 +31,22 @@ public class Conta implements Serializable {
     @Column(nullable = false)
     private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
     @Column(nullable = false)
-    private TipoConta tipoConta; //pj, pf e gov
+    private TipoConta tipoConta; //PJ, PF, GOV;
     @Column(nullable = false)
-    private Integer agencia;
-    @Column(nullable = false,length = 5)
-//    @Size(max = 5)
-    private Integer numeroConta;
+    @Size(max = 5)
+    @NotBlank
+    private String agencia;
+//    @Size(max = 6)
+    @Column(nullable = false,length = 6)
+    @NotBlank
+    private String numeroConta;
     @Column(nullable = false)
-    @Min(value = 1, message = "Valor deve ser maior que 1")
-    @Max(value = 9, message = "Valor deve ser menor que 9")
+    @NotBlank
     @Size(max = 1)// quantidade caracteres
-    private Integer digito;
+    private String digito;
     private Double saldo = 0.0;
 
-    @ManyToOne // Muitas contas para um Cliente
-    @JoinColumn(name = "clienteId") // coluna que vai ser chave primaria
-    private Cliente cliente;
+//    @ManyToOne // Muitas contas para um Cliente
+//    @JoinColumn(name = "clienteId") // coluna que vai ser chave primaria
+//    private Cliente cliente;
 }
