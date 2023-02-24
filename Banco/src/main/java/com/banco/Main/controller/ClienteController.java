@@ -3,6 +3,8 @@ package com.banco.Main.controller;
 import com.banco.Main.domain.Cliente;
 import com.banco.Main.service.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +21,10 @@ public class ClienteController {
     ClienteService clienteService;
 
     @PostMapping(value = "/cadastrar") // Cadastrar Cliente
-    public ResponseEntity<Object> save2(@RequestBody Cliente cliente) {
-        cliente.setRegistroCadastro(LocalDateTime.now()); // timezone
+    public ResponseEntity<Object> save(@RequestBody Cliente cliente) {
+
+        cliente.setRegistroCadastro(LocalDateTime.now());
+
         cliente = clienteService.save(cliente);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -32,6 +36,10 @@ public class ClienteController {
     @GetMapping(value = "/listar")
     public ResponseEntity<Object> getAllClients() {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
+    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Object> buscarID(@PathVariable String id) {
+        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
     }
 
 }

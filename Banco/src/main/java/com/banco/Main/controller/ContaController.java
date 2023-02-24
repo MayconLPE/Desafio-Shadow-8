@@ -2,6 +2,7 @@ package com.banco.Main.controller;
 
 import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
+import com.banco.Main.service.ClienteService;
 import com.banco.Main.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,14 +18,16 @@ import java.net.URI;
 public class ContaController {
     @Autowired
     private ContaService contaService;
+    @Autowired
+    private ClienteService clienteService;
+
+    @GetMapping(value = "/listar")
+    public ResponseEntity<Object> getAllClients() {
+        return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
+    }
 
     @PostMapping(value = "/salvar")
     public ResponseEntity<Object> save(@RequestBody Conta conta) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(contaService.save(conta));
-    }
-
-    @PostMapping(value = "/salvar2")
-    public ResponseEntity<Object> save2(@RequestBody Conta conta) {
         conta = contaService.save(conta);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
@@ -33,8 +36,12 @@ public class ContaController {
                 .toUri();
         return ResponseEntity.created(uri).body(conta);
     }
-    @GetMapping(value = "/listar")
-    public ResponseEntity<Object> getAllClients() {
-        return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
-    }
+
+//    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+//    public String save2(@PathVariable("id") String id, Cliente cliente) {
+//        Conta conta = contaService
+//
+//        return "redirect:/{id}";
+//
+//    }
 }

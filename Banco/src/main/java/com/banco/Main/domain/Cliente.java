@@ -33,7 +33,7 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String nome;
-    
+
 //    @Min(value = 11, message = "Valor deve ser maior que 11") // Para cpf
 //    @Max(value = 14, message = "Valor deve ser menor que 14") // Para cnpj
     @Column(nullable = false, unique = true)
