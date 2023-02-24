@@ -2,6 +2,7 @@ package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.domain.infoConta.NomeBanco;
+import com.banco.Main.domain.infoConta.TipoConta;
 import com.banco.Main.domain.infoConta.TipoPessoa;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -31,11 +32,13 @@ public class Conta implements Serializable {
     @Column(nullable = false)
     private TipoPessoa tipoPessoa; //PJ, PF, GOV;
     @Column(nullable = false)
+    private TipoConta tipoConta; // CC, CP, CCP;
+    @Column(nullable = false)
     @Size(max = 5)
     @NotBlank
     private String agencia;
 //    @Size(max = 6)
-    @Column(nullable = false,length = 6)
+    @Column(nullable = false,length = 6, unique = true)// não pode ser abaixo de 6 digitos
     @NotBlank
     private String numeroConta;
     @Column(nullable = false)
@@ -44,7 +47,7 @@ public class Conta implements Serializable {
     private String digito;
     private Double saldo = 0.0;
 
-    @ManyToOne // Muitas contas para um Cliente
-    @JoinColumn(name = "clienteId") // coluna que vai ser chave primaria
-    private Cliente cliente;
+//    @ManyToOne // Muitas contas para um Cliente
+//    @JoinColumn(name = "clienteId")
+//    private Cliente cliente;
 }

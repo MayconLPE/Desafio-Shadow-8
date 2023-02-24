@@ -33,9 +33,10 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String nome;
+    
+//    @Min(value = 11, message = "Valor deve ser maior que 11") // Para cpf
+//    @Max(value = 14, message = "Valor deve ser menor que 14") // Para cnpj
     @Column(nullable = false, unique = true)
-//    @Min(value = 11, message = "Valor deve ser maior que 1") // Para cpf
-//    @Max(value = 14, message = "Valor deve ser menor que 9") // Para cnpj
     @NotBlank
     private String documento; // cpf, cnpj...
     @Column(nullable = false)
@@ -53,10 +54,13 @@ public class Cliente  implements Serializable {
     private LocalDateTime registroCadastro;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
     private List<Endereco> enderecos = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
     private List<Conta> contas = new ArrayList<>();
     @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
     private List<Transacao> transacoes = new ArrayList<>();
 
 
