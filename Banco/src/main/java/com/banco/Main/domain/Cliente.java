@@ -1,12 +1,15 @@
 package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoCliente.Endereco;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Table(name = "CLIENTES")
+@Table(name = "CLIENTE")
 @Entity
 public class Cliente  implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -30,10 +33,12 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String nome;
-    @Column(nullable = false, unique = true, length = 11)
+    
+//    @Min(value = 11, message = "Valor deve ser maior que 11") // Para cpf
+//    @Max(value = 14, message = "Valor deve ser menor que 14") // Para cnpj
+    @Column(nullable = false, unique = true)
     @NotBlank
-    @CPF
-    private String cpf;
+    private String documento; // cpf, cnpj...
     @Column(nullable = false)
     @NotBlank
     private String telefone;
@@ -44,15 +49,19 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String senha;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime registroCadastro;
 
-    @OneToMany(mappedBy = "cliente") // Um cliente para muitas Contas
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
+    private List<Endereco> enderecos = new ArrayList<>();
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
     private List<Conta> contas = new ArrayList<>();
-    @OneToMany(mappedBy = "cliente")
-    private List<Endereco> enderecos;
-    @OneToMany(mappedBy = "cliente")
-    private List<Transacao> transacoes;
+    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+    @JoinColumn(name = "codigo_cliente")
+    private List<Transacao> transacoes = new ArrayList<>();
 
 
 }

@@ -32,7 +32,7 @@ public class Endereco implements Serializable {
     private String bairro;
     @Column(nullable = false)
     @NotBlank
-    private String numero;
+    private String numeroEndereco;
     @Column(nullable = false)
     @NotBlank
     private String rua;
@@ -42,10 +42,10 @@ public class Endereco implements Serializable {
     @Column(nullable = false)
     @NotBlank
     private String uf;
-    private String infoAdcional; // Trabalho ou casa
+    private String complemento; // Trabalho ou casa
 
-    @ManyToOne // Muitos enderecos para um Cliente
-    @JoinColumn(name = "enderecoId") // coluna que vai ser chave primaria
-    private Cliente cliente;
+//    @ManyToOne // Muitos enderecos para um Cliente
+//    @JoinColumn(name = "enderecoId")
+//    private Cliente cliente;
 
 }

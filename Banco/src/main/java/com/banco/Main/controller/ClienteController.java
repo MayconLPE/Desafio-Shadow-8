@@ -18,13 +18,7 @@ public class ClienteController {
     @Autowired
     ClienteService clienteService;
 
-    @PostMapping(value = "/salvar")
-    public ResponseEntity<Object> save(@RequestBody Cliente cliente) {
-        cliente.setRegistroCadastro(LocalDateTime.now()); // timezone
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.save(cliente));
-    }
-
-    @PostMapping(value = "/salvar2")
+    @PostMapping(value = "/cadastrar") // Cadastrar Cliente
     public ResponseEntity<Object> save2(@RequestBody Cliente cliente) {
         cliente.setRegistroCadastro(LocalDateTime.now()); // timezone
         cliente = clienteService.save(cliente);

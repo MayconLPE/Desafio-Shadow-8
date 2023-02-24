@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.banco</groupId>
-	<artifactId>Main</artifactId>
+	<artifactId>Banco</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Main</name>
 	<description>API conta bancária</description>
