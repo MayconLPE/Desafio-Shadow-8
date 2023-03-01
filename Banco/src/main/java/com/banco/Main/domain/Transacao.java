@@ -28,7 +28,6 @@ public class Transacao {
     private String contaOrigim;
     private String contaDestino;
 
-//    @ManyToOne
-//    @JoinColumn(name = "transacoesId")
+//    @ManyToOne(cascade = CascadeType.ALL)
 //    private Cliente cliente;
 }

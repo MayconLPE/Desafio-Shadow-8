@@ -1,6 +1,8 @@
 package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoCliente.Endereco;
+import com.banco.Main.domain.infoCliente.TipoDocumento;
+import com.banco.Main.domain.infoConta.TipoConta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -40,6 +42,10 @@ public class Cliente  implements Serializable {
     @NotBlank
     private String documento; // cpf, cnpj...
     @Column(nullable = false)
+    private TipoDocumento tipoDocumento; // CPF, CNPJ;
+    @Column(nullable = false)
+    private TipoConta tipoConta; // PJ, PF, CNPJ;
+    @Column(nullable = false)
     @NotBlank
     private String telefone;
     @Column(nullable = false, unique = true)
@@ -53,15 +59,15 @@ public class Cliente  implements Serializable {
     @Column(nullable = false)
     private LocalDateTime registroCadastro;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "codigo_cliente")
-    private List<Endereco> enderecos = new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "codigo_cliente")
-    private List<Conta> contas = new ArrayList<>();
-    @OneToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    @JoinColumn(name = "codigo_cliente")
-    private List<Transacao> transacoes = new ArrayList<>();
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "endereco_cliente")
+//    private List<Endereco> enderecos = new ArrayList<>();
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "Conta_cliente")
+//    private List<Conta> contas = new ArrayList<>();
+//    @OneToMany(orphanRemoval = true, cascade = CascadeType.ALL)
+//    @JoinColumn(name = "transacao_cliente")
+//    private List<Transacao> transacoes = new ArrayList<>();
 
 
 }

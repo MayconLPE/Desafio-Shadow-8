@@ -18,24 +18,38 @@ import java.net.URI;
 public class ContaController {
     @Autowired
     private ContaService contaService;
-    @Autowired
-    private ClienteService clienteService;
+
 
     @GetMapping(value = "/listar")
     public ResponseEntity<Object> getAllClients() {
         return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
     }
 
-    @PostMapping(value = "/salvar")
-    public ResponseEntity<Object> save(@RequestBody Conta conta) {
-        conta = contaService.save(conta);
-        URI uri = ServletUriComponentsBuilder
-                .fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(conta.getId())
-                .toUri();
-        return ResponseEntity.created(uri).body(conta);
-    }
+//    @PostMapping(value = "/salvar")
+//    public ResponseEntity<Object> save(@RequestBody Conta conta) {
+//        conta = contaService.save(conta);
+//        URI uri = ServletUriComponentsBuilder
+//                .fromCurrentRequest()
+//                .path("/{id}")
+//                .buildAndExpand(conta.getId())
+//                .toUri();
+//        return ResponseEntity.created(uri).body(conta);
+//    }
+
+//    @PostMapping(value = "/{id}")
+//    public ResponseEntity<Conta> save2(@PathVariable("id") String id) {
+//        // buscar cliente
+//        Cliente cliente = clienteService.findById(id);
+//
+//        // criar a conta
+//        var conta = new Conta();
+//        var contaCriada = contaService.save(conta);
+//
+//        clienteService.save(cliente);
+//
+//        return "redirect:/{id}";
+//
+//    }
 
 //    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
 //    public String save2(@PathVariable("id") String id, Cliente cliente) {
