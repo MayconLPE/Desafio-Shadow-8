@@ -18,30 +18,15 @@ public class ClienteController {
     public ResponseEntity save(@RequestBody ClienteDto clienteDto) {
         RetornaClienteContaDto retornaClienteContaDto = clienteService.save(clienteDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(retornaClienteContaDto);
-
     }
 
-//    @PostMapping(value = "/cadastrar") // Cadastrar Cliente
-//    public ResponseEntity<Object> save(@RequestBody Cliente cliente) {
-//
-//        cliente.setRegistroCadastro(LocalDateTime.now());
-//
-//        cliente = clienteService.save(cliente);
-//        URI uri = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(cliente.getId())
-//                .toUri();
-//        return ResponseEntity.created(uri).body(cliente);
+//    @GetMapping(value = "/listar")
+//    public ResponseEntity<Object> getAllClients() {
+//        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
 //    }
-
-    @GetMapping(value = "/listar")
-    public ResponseEntity<Object> getAllClients() {
-        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
-    }
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<Object> buscarID(@PathVariable String id) {
-        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
-    }
+//    @GetMapping(value = "/{id}")
+//    public ResponseEntity<Object> buscarID(@PathVariable String id) {
+//        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
+//    }
 
 }

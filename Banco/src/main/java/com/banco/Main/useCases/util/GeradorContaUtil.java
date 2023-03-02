@@ -5,10 +5,13 @@ import com.banco.Main.domain.Conta;
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class GeradorContaUtil {
+    @Autowired
+    PegarIdClienteUtil pegarIdClienteUtil;
 
     Integer agencia = 12345;
 
@@ -19,22 +22,35 @@ public class GeradorContaUtil {
 
     public Conta gerarContaInit(Cliente cliente) {
 
-        Conta conta = new Conta();
-        conta.setIdCliente(cliente.getId());
-        conta.setDocumento(cliente.getDocumento());
-        conta.setContaStatus(ContaStatus.PENDENTE);
-        conta.setNomeBanco(NomeBanco.BANCOPE);
-        conta.setTipoConta(cliente.getTipoConta());
-        conta.setAgencia(agencia);
-        conta.setNumeroConta(numeroContaRandom);
-        conta.setDigito(1);
+        var conta = Conta.builder()
+                .idCliente(cliente.getId())
+                .documento(cliente.getDocumento())
+                .contaStatus(ContaStatus.PENDENTE)
+                .nomeBanco(NomeBanco.BANCOPE)
+                .tipoConta(cliente.getTipoConta())
+                .agencia(agencia)
+                .numeroConta(numeroContaRandom)
+                .digito(1)
+                .saldo(50.0)
+                .build();
         return conta;
     }
+    public Conta geradorContaNova(CriarNovaContaDto criarNovaContaDto) {
 
-//    public Conta geradorContaNova(CriarNovaContaDto criarNovaContaDto) {
-//
-//        Conta conta = new Conta();
-//        return conta;
-//
-//    }
+        var idCliente = pegarIdClienteUtil.buscarId(criarNovaContaDto.getIdCliente()); // pegar Idclienta
+
+        var conta = Conta.builder()
+                .idCliente(idCliente.get().getId())
+                .documento(criarNovaContaDto.getDocumento())
+                .contaStatus(ContaStatus.PENDENTE)
+                .nomeBanco(NomeBanco.BANCOPE)
+                .tipoConta(criarNovaContaDto.getTipoConta())
+                .agencia(agencia)
+                .numeroConta(numeroContaRandom)
+                .digito(2)
+                .saldo(0.0)
+                .build();
+        return conta;
+
+    }
 }

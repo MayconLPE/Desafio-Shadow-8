@@ -12,6 +12,5 @@ public class ContaAdapter {
 
     public Conta saveConta(Conta conta) {
         return contaRepository.save(conta);
-
     }
 }

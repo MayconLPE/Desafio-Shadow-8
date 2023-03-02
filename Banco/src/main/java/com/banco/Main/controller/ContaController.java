@@ -1,12 +1,11 @@
 package com.banco.Main.controller;
 
 import com.banco.Main.service.ContaService;
+import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RestController
@@ -15,43 +14,15 @@ public class ContaController {
     @Autowired
     private ContaService contaService;
 
-
-    @GetMapping(value = "/listar")
-    public ResponseEntity<Object> getAllClients() {
-        return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
-    }
-
-//    @PostMapping(value = "/salvar")
-//    public ResponseEntity<Object> save(@RequestBody Conta conta) {
-//        conta = contaService.save(conta);
-//        URI uri = ServletUriComponentsBuilder
-//                .fromCurrentRequest()
-//                .path("/{id}")
-//                .buildAndExpand(conta.getId())
-//                .toUri();
-//        return ResponseEntity.created(uri).body(conta);
+//    @PostMapping(value = "/novaConta")
+//    public ResponseEntity novaConta(@RequestBody CriarNovaContaDto criarNovaContaDto) {
+//        var conta = contaService.gerarNovaConta(criarNovaContaDto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(conta);
+//    }
+//    @GetMapping(value = "/listar")
+//    public ResponseEntity<Object> getAllClients() {
+//        return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
 //    }
 
-//    @PostMapping(value = "/{id}")
-//    public ResponseEntity<Conta> save2(@PathVariable("id") String id) {
-//        // buscar cliente
-//        Cliente cliente = clienteService.findById(id);
-//
-//        // criar a conta
-//        var conta = new Conta();
-//        var contaCriada = contaService.save(conta);
-//
-//        clienteService.save(cliente);
-//
-//        return "redirect:/{id}";
-//
-//    }
 
-//    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
-//    public String save2(@PathVariable("id") String id, Cliente cliente) {
-//        Conta conta = contaService
-//
-//        return "redirect:/{id}";
-//
-//    }
 }
