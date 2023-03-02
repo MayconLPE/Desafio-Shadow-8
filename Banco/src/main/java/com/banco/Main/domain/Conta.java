@@ -8,7 +8,6 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 @Builder
 @AllArgsConstructor
@@ -24,9 +23,9 @@ public class Conta implements Serializable {
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
-//    @Column(nullable = false)
-//    @NotBlank
-    private String idDocumento;
+    @Column(nullable = false)
+    @NotBlank
+    private String idCliente;
     @Column(nullable = false)
     @NotBlank
     private String documento;
@@ -37,14 +36,11 @@ public class Conta implements Serializable {
     @Column(nullable = false)
     private TipoConta tipoConta;  //PJ, PF, GOV;
     @Column(nullable = false)
-    private Integer agencia;
-//    @Size(max = 6)
-    @Column(nullable = false,length = 6, unique = true)// não pode ser abaixo de 6 digitos
-    private Integer numeroConta;
-    @Column(nullable = false, length = 1)// quantidade caracteres
-    private Integer digito;
+    private Integer agencia; // 5 Digitos
+    @Column(nullable = false, unique = true)
+    private Integer numeroConta; // 6 Digitos
+    @Column(nullable = false)
+    private Integer digito; // 1 Digitos
     private Double saldo = 0.0;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Cliente cliente;
 }

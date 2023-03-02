@@ -1,16 +1,12 @@
 package com.banco.Main.controller;
 
-import com.banco.Main.domain.Cliente;
-import com.banco.Main.domain.Conta;
-import com.banco.Main.service.ClienteService;
 import com.banco.Main.service.ContaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController

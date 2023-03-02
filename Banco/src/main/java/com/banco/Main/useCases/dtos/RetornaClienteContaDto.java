@@ -10,6 +10,7 @@ import lombok.*;
 @Getter
 public class RetornaClienteContaDto {
 
+    private String idCliente;
     private String nome;
     private String telefone;
     private String email;

@@ -13,7 +13,6 @@ import com.banco.Main.useCases.util.GeradorContaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,7 +50,7 @@ public class ClienteService {
         var endereco = enderecoUtil.saveEndereco(cliente1,clienteDto);
         var enderecoCriado = enderecoAdapter.save(endereco);
 
-        return RetornaClienteContaDto.builder().nome(clienteDto.getNome()).telefone(clienteDto.getTelefone())
+        return RetornaClienteContaDto.builder().idCliente(cliente.getId()).nome(clienteDto.getNome()).telefone(clienteDto.getTelefone())
                 .email(clienteDto.getEmail()).tipoConta(clienteDto.getTipoConta()).numeroConta(contaCriada.getNumeroConta())
                 .digito(contaCriada.getDigito()).agencia(contaCriada.getAgencia())
                 .build();

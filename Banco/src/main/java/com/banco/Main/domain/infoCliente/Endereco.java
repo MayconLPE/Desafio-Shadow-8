@@ -1,7 +1,6 @@
 package com.banco.Main.domain.infoCliente;
 
 
-import com.banco.Main.domain.Cliente;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 

@@ -20,6 +20,7 @@ public class GeradorContaUtil {
     public Conta gerarContaInit(Cliente cliente) {
 
         Conta conta = new Conta();
+        conta.setIdCliente(cliente.getId());
         conta.setDocumento(cliente.getDocumento());
         conta.setContaStatus(ContaStatus.PENDENTE);
         conta.setNomeBanco(NomeBanco.BANCOPE);

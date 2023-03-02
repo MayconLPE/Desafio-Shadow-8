@@ -1,20 +1,12 @@
 package com.banco.Main.controller;
 
-import com.banco.Main.domain.Cliente;
 import com.banco.Main.service.ClienteService;
 import com.banco.Main.useCases.dtos.ClienteDto;
 import com.banco.Main.useCases.dtos.RetornaClienteContaDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import java.net.URI;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 
 @RestController
 @RequestMapping(value = "/cliente")
