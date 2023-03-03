@@ -12,8 +12,8 @@ public interface ContaService {
 
     Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto);
 
+
     Optional<Conta> findById(String id);
 
-
-
+    Object findAll();
 }

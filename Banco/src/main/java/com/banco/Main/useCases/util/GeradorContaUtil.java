@@ -37,7 +37,7 @@ public class GeradorContaUtil {
     }
     public Conta geradorContaNova(CriarNovaContaDto criarNovaContaDto) {
 
-        var idCliente = pegarIdClienteUtil.buscarId(criarNovaContaDto.getIdCliente()); // pegar Idclienta
+        var idCliente = pegarIdClienteUtil.buscarId(criarNovaContaDto.getIdCliente()); // pegar Idcliente
 
         var conta = Conta.builder()
                 .idCliente(idCliente.get().getId())

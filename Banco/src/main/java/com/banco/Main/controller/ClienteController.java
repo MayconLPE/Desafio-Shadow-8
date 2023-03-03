@@ -20,13 +20,9 @@ public class ClienteController {
         return ResponseEntity.status(HttpStatus.CREATED).body(retornaClienteContaDto);
     }
 
-//    @GetMapping(value = "/listar")
-//    public ResponseEntity<Object> getAllClients() {
-//        return ResponseEntity.status(HttpStatus.OK).body(clienteService.findAll());
-//    }
-//    @GetMapping(value = "/{id}")
-//    public ResponseEntity<Object> buscarID(@PathVariable String id) {
-//        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
-//    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<Object> buscarID(@PathVariable String id) {
+        return new ResponseEntity<>(clienteService.findById(id), HttpStatus.OK);
+    }
 
 }

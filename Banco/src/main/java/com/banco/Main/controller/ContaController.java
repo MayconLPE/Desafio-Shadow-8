@@ -12,17 +12,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(value = "/conta")
 public class ContaController {
     @Autowired
-    private ContaService contaService;
+    ContaService contaService;
 
-//    @PostMapping(value = "/novaConta")
-//    public ResponseEntity novaConta(@RequestBody CriarNovaContaDto criarNovaContaDto) {
-//        var conta = contaService.gerarNovaConta(criarNovaContaDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(conta);
-//    }
-//    @GetMapping(value = "/listar")
-//    public ResponseEntity<Object> getAllClients() {
-//        return ResponseEntity.status(HttpStatus.OK).body(contaService.findAll());
-//    }
-
-
+    @PostMapping(value = "/novaConta")
+    public ResponseEntity novaConta(@RequestBody CriarNovaContaDto criarNovaContaDto) {
+        var conta = contaService.gerarNovaConta(criarNovaContaDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(conta);
+    }
 }

@@ -20,21 +20,26 @@ public class ContaServiceImpl implements ContaService {
     @Autowired
     ContaAdapter contaAdapter;
 
+    @Override
     public Conta save(Conta conta) {
         return contaAdapter.saveConta(conta);
     }
 
+    @Override
     public Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto) {
         var novaConta = geradorContaUtil.geradorContaNova(criarNovaContaDto);
         return save(novaConta);
     }
+
+
+
 
     @Override
     public Optional<Conta> findById(String id) {
         return Optional.empty();
     }
 
-
+    @Override
     public Object findAll() {
         return contaRepository.findAll();
     }
