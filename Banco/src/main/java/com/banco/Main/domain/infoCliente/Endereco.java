@@ -1,7 +1,6 @@
 package com.banco.Main.domain.infoCliente;
 
 
-import com.banco.Main.domain.Cliente;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,7 +22,9 @@ public class Endereco implements Serializable {
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid2")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
-
+    @Column(nullable = false)
+    @NotBlank
+    private String idCliente;
     @Column(nullable = false)
     @NotBlank
     private String cep;
@@ -44,8 +45,7 @@ public class Endereco implements Serializable {
     private String uf;
     private String complemento; // Trabalho ou casa
 
-//    @ManyToOne // Muitos enderecos para um Cliente
-//    @JoinColumn(name = "enderecoId")
+//    @ManyToOne(cascade = CascadeType.ALL)
 //    private Cliente cliente;
 
 }

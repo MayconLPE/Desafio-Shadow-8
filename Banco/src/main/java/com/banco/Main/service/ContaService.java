@@ -1,22 +1,19 @@
 package com.banco.Main.service;
 
+
 import com.banco.Main.domain.Conta;
-import com.banco.Main.domain.infoConta.ContaStatus;
-import com.banco.Main.repository.ContaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 
-@Service
-public class ContaService {
-    @Autowired
-    ContaRepository contaRepository;
+import java.util.Optional;
 
-    public Conta save(Conta conta) {
-        conta.setContaStatus(ContaStatus.PENDENTE);
-        return contaRepository.save(conta);
-    }
+public interface ContaService {
 
-    public Object findAll() {
-        return contaRepository.findAll();
-    }
+    Conta save(Conta conta);
+
+    Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto);
+
+
+    Optional<Conta> findById(String id);
+
+    Object findAll();
 }

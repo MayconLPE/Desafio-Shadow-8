@@ -3,13 +3,11 @@ package com.banco.Main.domain;
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
-import com.banco.Main.domain.infoConta.TipoPessoa;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 import java.io.Serializable;
 @Builder
 @AllArgsConstructor
@@ -26,28 +24,23 @@ public class Conta implements Serializable {
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column(nullable = false)
+    @NotBlank
+    private String idCliente;
+    @Column(nullable = false)
+    @NotBlank
+    private String documento;
+    @Column(nullable = false)
     private ContaStatus contaStatus; // PENDENTE, ATIVO, BLOQUEADO.
     @Column(nullable = false)
     private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
     @Column(nullable = false)
-    private TipoPessoa tipoPessoa; //PJ, PF, GOV;
+    private TipoConta tipoConta;  //PJ, PF, GOV;
     @Column(nullable = false)
-    private TipoConta tipoConta; // CC, CP, CCP;
+    private Integer agencia; // 5 Digitos
+    @Column(nullable = false, unique = true)
+    private Integer numeroConta; // 6 Digitos
     @Column(nullable = false)
-    @Size(max = 5)
-    @NotBlank
-    private String agencia;
-//    @Size(max = 6)
-    @Column(nullable = false,length = 6, unique = true)// não pode ser abaixo de 6 digitos
-    @NotBlank
-    private String numeroConta;
-    @Column(nullable = false)
-    @Size(max = 1, message = "digito Maximo 1 caracter")// quantidade caracteres
-    @NotBlank
-    private String digito;
+    private Integer digito; // 1 Digitos
     private Double saldo = 0.0;
 
-//    @ManyToOne // Muitas contas para um Cliente
-//    @JoinColumn(name = "clienteId")
-//    private Cliente cliente;
 }
