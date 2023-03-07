@@ -6,10 +6,10 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DepositoAdapter {
-    @Autowired
-    DepositoRepository depositoRepository;
-
-    public DepositoAdapter(DepositoRepository depositoRepository) {
-        this.depositoRepository = depositoRepository;
-    }
+//    @Autowired
+//    DepositoRepository depositoRepository;
+//
+//    public DepositoAdapter(DepositoRepository depositoRepository) {
+//        this.depositoRepository = depositoRepository;
+//    }
 }
