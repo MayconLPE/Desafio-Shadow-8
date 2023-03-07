@@ -1,5 +1,6 @@
 package com.banco.Main.controller;
 
+import com.banco.Main.domain.Conta;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,22 @@ public class ContaController {
     @Autowired
     ContaService contaService;
 
-    @PostMapping(value = "/novaConta")
+    @PostMapping(value = "/novaConta") // Adicionar uma nova conta a cliente ja criado.
     public ResponseEntity novaConta(@RequestBody CriarNovaContaDto criarNovaContaDto) {
         var conta = contaService.gerarNovaConta(criarNovaContaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(conta);
     }
+    @PutMapping(value = "/depositar/{valor}/{id}")
+    public ResponseEntity<?> depositar(@PathVariable Double valor,@PathVariable String id) {
+        this.contaService.depositar(valor, id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+//    @GetMapping(value = "saldo/{id}")
+//    public ResponseEntity<?> saldo(@PathVariable String id){
+//        Conta c = contaService.findById(id);
+//        return new ResponseEntity<>(c.getSaldo(), HttpStatus.OK);
+//
+//    }
+
+
 }

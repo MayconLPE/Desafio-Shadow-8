@@ -3,6 +3,7 @@ package com.banco.Main.service.impl;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.repository.ContaRepository;
 import com.banco.Main.service.ContaService;
+import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.util.GeradorContaUtil;
@@ -15,6 +16,9 @@ import java.util.Optional;
 public class ContaServiceImpl implements ContaService {
     @Autowired
     ContaRepository contaRepository;
+
+    @Autowired
+    TransacaoService transacaoService;
     @Autowired
     GeradorContaUtil geradorContaUtil;
     @Autowired
@@ -31,8 +35,15 @@ public class ContaServiceImpl implements ContaService {
         return save(novaConta);
     }
 
+    @Override
+    public void setFixedSaldoFor(Double valor, String id) {
 
+    }
 
+    @Override
+    public void depositar(Double valor, String id) {
+        contaRepository.setFixedSaldoFor(valor, id);
+    }
 
     @Override
     public Optional<Conta> findById(String id) {
@@ -43,5 +54,7 @@ public class ContaServiceImpl implements ContaService {
     public Object findAll() {
         return contaRepository.findAll();
     }
+
+
 
 }

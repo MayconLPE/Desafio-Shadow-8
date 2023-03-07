@@ -1,9 +1,12 @@
 package com.banco.Main.useCases.adapters;
 
+import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.repository.ContaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.util.Optional;
 
 @Component
 public class ContaAdapter {
@@ -12,5 +15,9 @@ public class ContaAdapter {
 
     public Conta saveConta(Conta conta) {
         return contaRepository.save(conta);
+    }
+
+    public Optional<Cliente> findByDocumento(String documento) {
+        return contaRepository.findByDocumento(documento);
     }
 }
