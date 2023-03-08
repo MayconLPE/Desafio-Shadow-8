@@ -18,7 +18,6 @@ public class TransacaoController {
 
     @PostMapping(value = "/salvar")
     public ResponseEntity<?> savarTransacao(@RequestBody Transacao trans) {
-
         Transacao transacao = this.transacaoService.save(trans);
         return new ResponseEntity<>(transacao, HttpStatus.OK);
     }

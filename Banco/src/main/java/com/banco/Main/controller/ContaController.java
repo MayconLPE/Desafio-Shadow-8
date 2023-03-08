@@ -1,5 +1,6 @@
 package com.banco.Main.controller;
 
+import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
@@ -20,6 +21,14 @@ public class ContaController {
         var conta = contaService.gerarNovaConta(criarNovaContaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(conta);
     }
+    // Mudar estado da conta para ativo ou bloqueado:
+
+    @GetMapping(value = "/{numeroConta}")
+    public ResponseEntity<Conta> buscarNumeroConta(@PathVariable Integer numeroConta) {
+        Conta conta = contaService.findByNumeroConta(numeroConta);
+        return ResponseEntity.ok().body(conta);
+    }
+
     @PutMapping(value = "/depositar/{valor}/{id}")
     public ResponseEntity<?> depositar(@PathVariable Double valor,@PathVariable String id) {
         this.contaService.depositar(valor, id);

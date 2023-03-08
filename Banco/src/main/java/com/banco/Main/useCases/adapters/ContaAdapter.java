@@ -20,4 +20,8 @@ public class ContaAdapter {
     public Optional<Cliente> findByDocumento(String documento) {
         return contaRepository.findByDocumento(documento);
     }
+
+    public Conta findByNumeroConta(Integer numeroConta) {
+        return contaRepository.findByNumeroConta(numeroConta);
+    }
 }

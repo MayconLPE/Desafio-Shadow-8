@@ -19,11 +19,5 @@ public class ClienteAdapter {
     public Optional<Cliente> findById(String id) {
         return clienteRepository.findById(id);
     }
-//    private Optional<Cliente> findByCPF(ClienteDto clienteDto) {
-//        Optional<Cliente> obj = clienteRepository.findByDocumento(clienteDto.getDocumento());
-//        if (obj != null) {
-//            return obj;
-//        }
-//        return null;
-//    }
+
 }
