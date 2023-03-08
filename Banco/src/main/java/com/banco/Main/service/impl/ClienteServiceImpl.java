@@ -7,7 +7,7 @@ import com.banco.Main.useCases.adapters.EnderecoAdapter;
 import com.banco.Main.useCases.dtos.ClienteDto;
 import com.banco.Main.useCases.dtos.RetornaClienteContaDto;
 import com.banco.Main.service.ClienteService;
-import com.banco.Main.useCases.exceptionHandler.DocumentoInvalidoException;
+import com.banco.Main.useCases.exceptionHandler.DocumentoInvalidoError;
 import com.banco.Main.useCases.util.EnderecoUtil;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.ValidarDocumentoUtil;
@@ -67,7 +67,7 @@ public class ClienteServiceImpl implements ClienteService {
                     .build();
 
         }
-        throw new DocumentoInvalidoException();
+        throw new DocumentoInvalidoError();
     }
 
 

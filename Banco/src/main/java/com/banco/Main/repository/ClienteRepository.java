@@ -9,5 +9,5 @@ import java.util.OptionalInt;
 
 @Repository
 public interface ClienteRepository  extends JpaRepository<Cliente, String> {
-//    Optional<Cliente> findByDocumento(String id);
+
 }

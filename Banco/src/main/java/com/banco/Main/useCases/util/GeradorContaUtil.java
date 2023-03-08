@@ -18,9 +18,10 @@ public class GeradorContaUtil {
     int min = 100000;
     int max = 500000;
 
-    int numeroContaRandom = (int) Math.floor((Math.random()) * (max - min + 1) + min);
+
 
     public Conta gerarContaInit(Cliente cliente) {
+        int numeroContaRandom = (int) Math.floor((Math.random()) * (max - min + 1) + min);
 
         var conta = Conta.builder()
                 .idCliente(cliente.getId())
@@ -36,6 +37,7 @@ public class GeradorContaUtil {
         return conta;
     }
     public Conta geradorContaNova(CriarNovaContaDto criarNovaContaDto) {
+        int numeroContaRandom = (int) Math.floor((Math.random()) * (max - min + 1) + min);
 
         var idCliente = pegarIdClienteUtil.buscarId(criarNovaContaDto.getIdCliente()); // pegar Idcliente
 

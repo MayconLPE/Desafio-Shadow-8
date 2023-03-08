@@ -2,10 +2,7 @@ package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "TRANSACAO")
 @Entity
 public class Transacao {
@@ -31,9 +29,7 @@ public class Transacao {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataTransacao;
     private TipoTransacao tipoTransacao; /// PIX, TED, DOC;
-    private String contaOrigim;
+    private String contaOrigem;
     private String contaDestino;
 
-//    @ManyToOne(cascade = CascadeType.ALL)
-//    private Cliente cliente;
 }
