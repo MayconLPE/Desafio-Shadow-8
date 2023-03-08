@@ -40,7 +40,7 @@ public class ContaServiceImpl implements ContaService {
 
     @Override
     public Conta findByNumeroConta(Integer numeroConta) {
-        return contaAdapter.findByNumeroConta(numeroConta);
+        return contaAdapter.findByNumeroConta(numeroConta).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND," Numero conta não encontrado"));
     }
 
 

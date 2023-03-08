@@ -21,7 +21,7 @@ public class ContaAdapter {
         return contaRepository.findByDocumento(documento);
     }
 
-    public Conta findByNumeroConta(Integer numeroConta) {
+    public Optional<Conta> findByNumeroConta(Integer numeroConta) {
         return contaRepository.findByNumeroConta(numeroConta);
     }
 }

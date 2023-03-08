@@ -21,12 +21,10 @@ public class ContaController {
         var conta = contaService.gerarNovaConta(criarNovaContaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(conta);
     }
-    // Mudar estado da conta para ativo ou bloqueado:
 
     @GetMapping(value = "/{numeroConta}")
-    public ResponseEntity<Conta> buscarNumeroConta(@PathVariable Integer numeroConta) {
-        Conta conta = contaService.findByNumeroConta(numeroConta);
-        return ResponseEntity.ok().body(conta);
+    public ResponseEntity<Object> buscarNumeroConta(@PathVariable Integer numeroConta) {
+        return new ResponseEntity<>(contaService.findByNumeroConta(numeroConta), HttpStatus.OK);
     }
 
     @PutMapping(value = "/depositar/{valor}/{id}")

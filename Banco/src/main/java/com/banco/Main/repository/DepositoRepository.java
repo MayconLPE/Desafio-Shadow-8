@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface DepositoRepository extends JpaRepository<Deposito, String> {
-//    List<Deposito> findByIdCliente(String id);
 }

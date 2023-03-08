@@ -14,7 +14,7 @@ public interface ContaRepository extends JpaRepository<Conta, String> {
 
     Optional<Cliente> findByDocumento(String documento);
 
-    Conta findByNumeroConta(Integer numeroConta);
+    Optional<Conta> findByNumeroConta(Integer numeroConta);
 
 
 }
