@@ -32,7 +32,7 @@ public class ContaController {
     public ResponseEntity<Conta> bloquearConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.updateStatusContaBloqueado(numeroConta), HttpStatus.OK);
     }
-    
+
 
 
 

@@ -47,6 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
                     .email(clienteDto.getEmail())
                     .senha(clienteDto.getSenha())
                     .tipoConta(clienteDto.getTipoConta())
+                    .nomeBanco(clienteDto.getNomeBanco())
                     .build();
 
             Cliente cliente1 = clienteAdapter.saveCliente(cliente);
@@ -64,6 +65,7 @@ public class ClienteServiceImpl implements ClienteService {
                     .numeroConta(contaCriada.getNumeroConta())
                     .digito(contaCriada.getDigito())
                     .agencia(contaCriada.getAgencia())
+                    .nomeBanco(clienteDto.getNomeBanco())
                     .build();
 
         }

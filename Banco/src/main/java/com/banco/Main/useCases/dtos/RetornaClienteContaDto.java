@@ -1,5 +1,6 @@
 package com.banco.Main.useCases.dtos;
 
+import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
 import lombok.*;
 
@@ -18,4 +19,5 @@ public class RetornaClienteContaDto {
     private Integer agencia;
     private Integer numeroConta;
     private Integer digito;
+    private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
 }

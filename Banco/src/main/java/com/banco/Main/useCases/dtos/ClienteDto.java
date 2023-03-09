@@ -1,6 +1,7 @@
 package com.banco.Main.useCases.dtos;
 
 import com.banco.Main.domain.infoCliente.TipoDocumento;
+import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,4 +24,5 @@ public class ClienteDto {
     private String senha;
     private LocalDateTime registroCadastro;
     private EnderecoDto endereco;
+    private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
 }

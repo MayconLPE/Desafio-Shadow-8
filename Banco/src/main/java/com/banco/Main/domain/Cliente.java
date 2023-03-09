@@ -1,6 +1,7 @@
 package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoCliente.TipoDocumento;
+import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
@@ -31,8 +32,10 @@ public class Cliente  implements Serializable {
     @Column(nullable = false, unique = true)
     @NotBlank
     private String documento; // cpf, cnpj...
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoDocumento tipoDocumento; // CPF, CNPJ;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TipoConta tipoConta; // PJ, PF, CNPJ;
     @Column(nullable = false)
@@ -48,5 +51,9 @@ public class Cliente  implements Serializable {
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     @Column(nullable = false)
     private LocalDateTime registroCadastro;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
 
 }
