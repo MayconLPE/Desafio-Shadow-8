@@ -24,11 +24,19 @@ public class ContaController {
     public ResponseEntity<Object> buscarNumeroConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.findByNumeroConta(numeroConta), HttpStatus.OK);
     }
-    @PatchMapping(value = "/{numeroConta}") // Mudar statusConta para ATIVO.
+    @PatchMapping(value = "ativar/{numeroConta}") // Mudar statusConta para ATIVO.
     public ResponseEntity<Conta> ativarConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.updateStatusContaAtivo(numeroConta), HttpStatus.OK);
-
     }
+    @PatchMapping(value = "bloquear/{numeroConta}") // Mudar statusConta para BLOQUEADO.
+    public ResponseEntity<Conta> bloquearConta(@PathVariable Integer numeroConta) {
+        return new ResponseEntity<>(contaService.updateStatusContaBloqueado(numeroConta), HttpStatus.OK);
+    }
+    
+
+
+
+
 //    @PostMapping(value = "/alterarStatus/{numeroConta}")
 //    public ResponseEntity<?> alterarStatusAtivo(@PathVariable Integer numeroConta) {
 //       this.contaService.saveStatusConta(numeroConta);

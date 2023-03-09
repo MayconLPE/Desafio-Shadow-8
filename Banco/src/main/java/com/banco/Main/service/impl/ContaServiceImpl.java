@@ -44,18 +44,19 @@ public class ContaServiceImpl implements ContaService {
     public Conta findByNumeroConta(Integer numeroConta) {
         return contaAdapter.findByNumeroConta(numeroConta).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND," Numero conta não encontrado"));
     }
-
-    @Override
-    public Conta updateStatusContaBloqueado(Integer numeroConta) {
-        return null;
-    }
-
     @Override
     public Conta updateStatusContaAtivo(Integer numeroConta) {
         Conta c = findByNumeroConta(numeroConta);
         c.setContaStatus(ContaStatus.ATIVO);
         return contaRepository.save(c);
     }
+    @Override
+    public Conta updateStatusContaBloqueado(Integer numeroConta) {
+        Conta c = findByNumeroConta(numeroConta);
+        c.setContaStatus(ContaStatus.BLOQUEADO);
+        return contaRepository.save(c);
+    }
+
 
 
     @Override
