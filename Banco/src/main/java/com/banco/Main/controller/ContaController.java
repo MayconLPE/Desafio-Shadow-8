@@ -1,10 +1,7 @@
 package com.banco.Main.controller;
 
-import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
-import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.service.ContaService;
-import com.banco.Main.useCases.dtos.ContaPatchDto;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,9 +24,9 @@ public class ContaController {
     public ResponseEntity<Object> buscarNumeroConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.findByNumeroConta(numeroConta), HttpStatus.OK);
     }
-    @PatchMapping(value = "/{numeroConta}")
-    public ResponseEntity<Conta> updateStatusConta(@PathVariable Integer numeroConta) {
-        return new ResponseEntity<>(contaService.updateStatusConta(numeroConta), HttpStatus.OK);
+    @PatchMapping(value = "/{numeroConta}") // Mudar statusConta para ATIVO.
+    public ResponseEntity<Conta> ativarConta(@PathVariable Integer numeroConta) {
+        return new ResponseEntity<>(contaService.updateStatusContaAtivo(numeroConta), HttpStatus.OK);
 
     }
 //    @PostMapping(value = "/alterarStatus/{numeroConta}")

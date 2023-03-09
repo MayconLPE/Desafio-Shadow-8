@@ -1,13 +1,11 @@
 package com.banco.Main.service.impl;
 
-import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.repository.ContaRepository;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
-import com.banco.Main.useCases.dtos.ContaPatchDto;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.util.AlterarStatusContaUtil;
 import com.banco.Main.useCases.util.GeradorContaUtil;
@@ -48,18 +46,15 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public Conta updateStatusConta(Integer numeroConta) {
-        Conta c = findByNumeroConta(numeroConta);
-
-//        if (c.getContaStatus() != null && !c.getContaStatus().equals(c.getContaStatus()))
-            c.setContaStatus(ContaStatus.ATIVO);
-
-        return contaRepository.save(c);
+    public Conta updateStatusContaBloqueado(Integer numeroConta) {
+        return null;
     }
 
     @Override
-    public Conta saveStatusConta(Integer numeroConta, ContaPatchDto contaPatchDto) {
-        return null;
+    public Conta updateStatusContaAtivo(Integer numeroConta) {
+        Conta c = findByNumeroConta(numeroConta);
+        c.setContaStatus(ContaStatus.ATIVO);
+        return contaRepository.save(c);
     }
 
 
