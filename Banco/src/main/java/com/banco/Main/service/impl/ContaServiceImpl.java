@@ -2,11 +2,14 @@ package com.banco.Main.service.impl;
 
 import com.banco.Main.domain.Cliente;
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.repository.ContaRepository;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
+import com.banco.Main.useCases.dtos.ContaPatchDto;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
+import com.banco.Main.useCases.util.AlterarStatusContaUtil;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +28,8 @@ public class ContaServiceImpl implements ContaService {
     @Autowired
     GeradorContaUtil geradorContaUtil;
     @Autowired
+    AlterarStatusContaUtil alterarStatusContaUtil;
+    @Autowired
     ContaAdapter contaAdapter;
 
     @Override
@@ -37,10 +42,24 @@ public class ContaServiceImpl implements ContaService {
         var novaConta = geradorContaUtil.geradorContaNova(criarNovaContaDto);
         return save(novaConta);
     }
-
     @Override
     public Conta findByNumeroConta(Integer numeroConta) {
         return contaAdapter.findByNumeroConta(numeroConta).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND," Numero conta não encontrado"));
+    }
+
+    @Override
+    public Conta updateStatusConta(Integer numeroConta) {
+        Conta c = findByNumeroConta(numeroConta);
+
+//        if (c.getContaStatus() != null && !c.getContaStatus().equals(c.getContaStatus()))
+            c.setContaStatus(ContaStatus.ATIVO);
+
+        return contaRepository.save(c);
+    }
+
+    @Override
+    public Conta saveStatusConta(Integer numeroConta, ContaPatchDto contaPatchDto) {
+        return null;
     }
 
 
@@ -48,7 +67,6 @@ public class ContaServiceImpl implements ContaService {
     public void depositar(Double valor, String id) {
 
     }
-
 
     @Override
     public Optional<Conta> findById(String id) {
@@ -59,6 +77,8 @@ public class ContaServiceImpl implements ContaService {
     public Object findAll() {
         return contaRepository.findAll();
     }
+
+
 
 
 

@@ -14,11 +14,8 @@ public class GeradorContaUtil {
     PegarIdClienteUtil pegarIdClienteUtil;
 
     Integer agencia = 12345;
-
     int min = 100000;
     int max = 500000;
-
-
 
     public Conta gerarContaInit(Cliente cliente) {
         int numeroContaRandom = (int) Math.floor((Math.random()) * (max - min + 1) + min);
