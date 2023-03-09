@@ -4,6 +4,8 @@ import com.banco.Main.domain.Conta;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +33,11 @@ public class ContaController {
     @PatchMapping(value = "bloquear/{numeroConta}") // Mudar statusConta para BLOQUEADO.
     public ResponseEntity<Conta> bloquearConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.updateStatusContaBloqueado(numeroConta), HttpStatus.OK);
+    }
+    @GetMapping(value = "/exibirContas") // Exibir todas as contas
+    public ResponseEntity<Page> findAll(Pageable pageable) {
+        Page<Conta> contas = contaService.findAll(pageable);
+        return ResponseEntity.ok().body(contas);
     }
 
 

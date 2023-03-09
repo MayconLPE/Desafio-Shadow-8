@@ -10,6 +10,8 @@ import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.util.AlterarStatusContaUtil;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -56,7 +58,10 @@ public class ContaServiceImpl implements ContaService {
         c.setContaStatus(ContaStatus.BLOQUEADO);
         return contaRepository.save(c);
     }
-
+    @Override
+    public Page<Conta> findAll(Pageable pageable) {
+        return contaRepository.findAll(pageable);
+    }
 
 
     @Override
@@ -69,10 +74,7 @@ public class ContaServiceImpl implements ContaService {
         return Optional.empty();
     }
 
-    @Override
-    public Object findAll() {
-        return contaRepository.findAll();
-    }
+
 
 
 
