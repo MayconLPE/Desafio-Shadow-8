@@ -28,6 +28,9 @@ public class Conta implements Serializable {
     private String idCliente;
     @Column(nullable = false)
     @NotBlank
+    private String nomeCliente;
+    @Column(nullable = false)
+    @NotBlank
     private String documento;
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)

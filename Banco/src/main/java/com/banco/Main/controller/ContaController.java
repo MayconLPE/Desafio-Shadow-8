@@ -3,6 +3,7 @@ package com.banco.Main.controller;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
+import com.banco.Main.useCases.dtos.SaldoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,8 +23,8 @@ public class ContaController {
         var conta = contaService.gerarNovaConta(criarNovaContaDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(conta);
     }
-    @GetMapping(value = "/{numeroConta}")
-    public ResponseEntity<Object> buscarNumeroConta(@PathVariable Integer numeroConta) {
+    @GetMapping(value = "/{numeroConta}") // buscar por numero da conta
+    public ResponseEntity<Conta> buscarNumeroConta(@PathVariable Integer numeroConta) {
         return new ResponseEntity<>(contaService.findByNumeroConta(numeroConta), HttpStatus.OK);
     }
     @PatchMapping(value = "ativar/{numeroConta}") // Mudar statusConta para ATIVO.
@@ -39,6 +40,18 @@ public class ContaController {
         Page<Conta> contas = contaService.findAll(pageable);
         return ResponseEntity.ok().body(contas);
     }
+    @GetMapping("/saldo/{numeroConta}") // Exibir Saldo da conta
+    public SaldoDto saldoConta(@PathVariable Integer numeroConta) {
+        return new SaldoDto(contaService.findByNumeroConta(numeroConta));
+
+    }
+
+
+//    @GetMapping(value = "saldo/{numeroConta}") // Exibir saldo da conta
+//    public ResponseEntity<Conta> saldoConta(@PathVariable Integer numeroConta) {
+//        return new ResponseEntity<>(contaService.saldoConta(), HttpStatus.OK);
+//    }
+
 
 
 
