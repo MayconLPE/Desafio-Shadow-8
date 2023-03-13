@@ -2,6 +2,8 @@ package com.banco.Main.useCases.dtos;
 
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 @Builder
@@ -9,6 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @Setter
 @Getter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class RetornaClienteContaDto {
 
     private String idCliente;

@@ -4,6 +4,8 @@ import com.banco.Main.domain.infoCliente.TipoDocumento;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -20,6 +22,7 @@ import java.time.LocalDateTime;
 @Setter
 @Table(name = "CLIENTE")
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Cliente  implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

@@ -1,5 +1,7 @@
 package com.banco.Main.domain.infoTransacao;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,6 +14,7 @@ import javax.persistence.*;
 @Setter
 @Table(name = "DEPOSITOS")
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Deposito {
     @Id
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid")

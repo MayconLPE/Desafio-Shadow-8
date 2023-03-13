@@ -3,6 +3,8 @@ package com.banco.Main.useCases.dtos;
 import com.banco.Main.domain.infoCliente.TipoDocumento;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,6 +15,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ClienteDto {
 
     private String nome;

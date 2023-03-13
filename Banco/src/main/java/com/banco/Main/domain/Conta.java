@@ -3,6 +3,8 @@ package com.banco.Main.domain;
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @Setter
 @Table(name = "CONTAS")
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Conta implements Serializable {
     private static final long serialVersionUID = 1L;
 

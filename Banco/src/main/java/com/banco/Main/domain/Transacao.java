@@ -2,6 +2,8 @@ package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -18,6 +20,7 @@ import java.time.LocalDateTime;
 @Builder
 @Table(name = "TRANSACAO")
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Transacao {
 
     @Id

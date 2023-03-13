@@ -1,6 +1,8 @@
 package com.banco.Main.domain.infoCliente;
 
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -15,6 +17,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @Entity
 @Table(name = "ENDERECO")
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Endereco implements Serializable {
 
     private static final long serialVersionUID = 1L;
