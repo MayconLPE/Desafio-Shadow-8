@@ -37,12 +37,13 @@
 	
    3- Efetuar operações de consulta de saldo e extrato, realizar saque e transferência.
    
-    4 - Receber a entrada de informações para cadastrar a quantidade de saques gratuitos por mês. (operação assíncrona)
+   4- Receber a entrada de informações para cadastrar a quantidade de saques gratuitos por mês. (operação assíncrona)
+   
     
-    5 - Apenas saques, verificar a quantidade de saques grátis, caso tenha disponibilidade, não cobrar taxa e notificar (mensageria) o uso ao serviço responsável 
+   5 - Apenas saques, verificar a quantidade de saques grátis, caso tenha disponibilidade, não cobrar taxa e notificar (mensageria) o uso ao serviço responsável 
     
     
-    6 - Adicionar artefatos e implementações aprendidas em outros desafios. Funcionalidades do serviço 2 (responsável pelo controle da quantidade de saques gratuitos):
+   6 - Adicionar artefatos e implementações aprendidas em outros desafios. Funcionalidades do serviço 2 (responsável pelo controle da quantidade de saques gratuitos):
     
 > * 1 - criar o limite de saque gratuito por mês para o cliente
     
