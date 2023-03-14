@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 
 import javax.persistence.Column;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 
@@ -16,15 +17,12 @@ import java.util.Date;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class DepositoDto {
 
-    private String idCliente;
-    private String idConta;
-    private String documento;
-    private Integer numeroConta;
-    private Double valorDeposito;
-    private Double saldoAnterior;
-    private Double novoSaldo;
 
-    private Date date;
+    private Integer numeroConta;
+    private Integer digito;
+    private Integer agencia;
+    private Double valorDeposito;
+    private LocalDateTime data = LocalDateTime.now();
 
 
 }

@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Getter
@@ -31,7 +28,8 @@ public class Transacao {
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataTransacao;
-    private TipoTransacao tipoTransacao; /// PIX, TED, DOC;
+    @Enumerated(EnumType.STRING)
+    private TipoTransacao tipoTransacao; /// PIX, TED, DOC, DEPOSITO;
     private String contaOrigem;
     private String contaDestino;
 

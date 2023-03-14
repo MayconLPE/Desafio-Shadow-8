@@ -1,14 +1,18 @@
 package com.banco.Main.service.impl;
 
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.Transacao;
 import com.banco.Main.domain.infoConta.ContaStatus;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.repository.ContaRepository;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
+import com.banco.Main.useCases.dtos.DepositoDto;
 import com.banco.Main.useCases.dtos.SaldoDto;
 import com.banco.Main.useCases.util.GeradorContaUtil;
+import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -62,19 +66,26 @@ public class ContaServiceImpl implements ContaService {
         return contaRepository.findAll(pageable);
     }
 
-//    @Override
-//    public Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto) {
-//        var novaConta = geradorContaUtil.geradorContaNova(criarNovaContaDto);
-//        return save(novaConta);
-//    }
-
-
-
-
     @Override
-    public void depositar(Double valor, String id) {
+    public DepositoDto deposito(DepositoDto depositoDto) {
 
+        Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
+        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
+
+        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
+        transacao.setContaOrigem(conta.getId());
+
+        contaRepository.save(conta);
+        transacaoService.save(transacao);
+
+        return depositoDto;
     }
+
+
+
+
+
+
 
     @Override
     public Optional<Conta> findById(String id) {

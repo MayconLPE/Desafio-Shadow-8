@@ -3,6 +3,7 @@ package com.banco.Main.controller;
 import com.banco.Main.domain.Conta;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
+import com.banco.Main.useCases.dtos.DepositoDto;
 import com.banco.Main.useCases.dtos.SaldoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,38 +41,36 @@ public class ContaController {
         Page<Conta> contas = contaService.findAll(pageable);
         return ResponseEntity.ok().body(contas);
     }
-    @GetMapping("/saldo/{numeroConta}") // Exibir Saldo da conta
+    @GetMapping(value =  "/saldo/{numeroConta}") // Exibir Saldo da conta
     public SaldoDto saldoConta(@PathVariable Integer numeroConta) {
         return new SaldoDto(contaService.findByNumeroConta(numeroConta));
-
     }
+    @PostMapping(value = "/depositar")
+    public ResponseEntity<DepositoDto> depositar(@RequestBody DepositoDto depositoDto) {
+        DepositoDto depositoDto1 = contaService.deposito(depositoDto);
+        return ResponseEntity.status(HttpStatus.OK).body(depositoDto1);
+    }
+
+
+
 
 
 //    @GetMapping(value = "saldo/{numeroConta}") // Exibir saldo da conta
 //    public ResponseEntity<Conta> saldoConta(@PathVariable Integer numeroConta) {
 //        return new ResponseEntity<>(contaService.saldoConta(), HttpStatus.OK);
 //    }
-
-
-
-
-
-
 //    @PostMapping(value = "/alterarStatus/{numeroConta}")
 //    public ResponseEntity<?> alterarStatusAtivo(@PathVariable Integer numeroConta) {
 //       this.contaService.saveStatusConta(numeroConta);
 //       return new ResponseEntity<>(HttpStatus.OK);
 //    }
-
-
-
-
-
-    @PutMapping(value = "/depositar/{valor}/{id}")
-    public ResponseEntity<?> depositar(@PathVariable Double valor,@PathVariable String id) {
-        this.contaService.depositar(valor, id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
+//
+//
+//    @PutMapping(value = "/depositar/{valor}/{id}")
+//    public ResponseEntity<?> depositar(@PathVariable Double valor,@PathVariable String id) {
+//        this.contaService.depositar(valor, id);
+//        return new ResponseEntity<>(HttpStatus.OK);
+//    }
 //    @GetMapping(value = "saldo/{id}")
 //    public ResponseEntity<?> saldo(@PathVariable String id){
 //        Conta c = contaService.findById(id);
