@@ -2,10 +2,7 @@ package com.banco.Main.service;
 
 
 import com.banco.Main.domain.Conta;
-import com.banco.Main.useCases.dtos.CriarNovaContaDto;
-import com.banco.Main.useCases.dtos.DepositoDto;
-import com.banco.Main.useCases.dtos.SaldoDto;
-import com.banco.Main.useCases.dtos.SaqueDto;
+import com.banco.Main.useCases.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,9 +16,12 @@ public interface ContaService {
     Conta updateStatusContaAtivo(Integer numeroConta);
     Conta updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
-
-    DepositoDto deposito(DepositoDto depositoDto);
+    DepositoResponseDto deposito(DepositoDto depositoDto);
     SaqueDto saque(SaqueDto saqueDto);
+
+//    TransferenciaDTO pix(TransferenciaDTO transferenciaDTO);
+
+
 
 
 

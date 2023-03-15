@@ -8,17 +8,13 @@ import com.banco.Main.repository.ContaRepository;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
-import com.banco.Main.useCases.dtos.CriarNovaContaDto;
-import com.banco.Main.useCases.dtos.DepositoDto;
-import com.banco.Main.useCases.dtos.SaqueDto;
+import com.banco.Main.useCases.dtos.*;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
@@ -47,7 +43,7 @@ public class ContaServiceImpl implements ContaService {
     }
     @Override
     public Conta findByNumeroConta(Integer numeroConta) {
-        return contaAdapter.findByNumeroConta(numeroConta).orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND," Numero conta não encontrado"));
+        return contaAdapter.findByNumeroConta(numeroConta);
     }
     @Override
     public Conta updateStatusContaAtivo(Integer numeroConta) {
@@ -67,19 +63,29 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public DepositoDto deposito(DepositoDto depositoDto) {
+    public DepositoResponseDto deposito(DepositoDto depositoDto) {
 
+        var responseDto = new DepositoResponseDto();
         Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
-        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
 
-        Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
+        responseDto.setSaldoAntigo(conta.getSaldo());
+        Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito(), conta.getSaldo());
         transacao.setContaDestino(conta.getId());
+        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
+        responseDto.setSaldoAtual(conta.getSaldo());
         transacao.setSaldoAtual(conta.getSaldo());
 
         contaRepository.save(conta);
         transacaoService.save(transacao);
 
-        return depositoDto;
+        responseDto.setData(depositoDto.getData());
+        responseDto.setNumeroConta(depositoDto.getNumeroConta());
+        responseDto.setDigito(depositoDto.getDigito());
+        responseDto.setAgencia(depositoDto.getAgencia());
+        responseDto.setValorDeposito(depositoDto.getValorDeposito());
+
+        return responseDto;
+
     }
 
 
@@ -87,6 +93,7 @@ public class ContaServiceImpl implements ContaService {
     public SaqueDto saque(SaqueDto saqueDto) {
 
         Conta conta = findByNumeroConta(saqueDto.getNumeroConta());
+
         conta.setSaldo(conta.getSaldo() - saqueDto.getValor());
 
         Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE,saqueDto.getValor());
@@ -98,9 +105,27 @@ public class ContaServiceImpl implements ContaService {
         return saqueDto;
     }
 
+
+
+
+
+//    @Override
+//    public TransferenciaDTO pix(TransferenciaDTO transferenciaDTO) {
+//        Conta contaOrigem = findByNumeroConta(transferenciaDTO.getContaOrigem());
+//        Conta contaDestino = findByNumeroConta(transferenciaDTO.getContaDestino());
+//
+//        contaRepository.alterSaldoConta(contaOrigem.getNumeroConta(),contaOrigem.getSaldo() - transferenciaDTO.getValor());
+//        contaRepository.alterSaldoConta(contaDestino.getNumeroConta(), contaDestino.getSaldo() + transferenciaDTO.getValor());
+//
+//        return null;
+//    }
+
+
+
     @Override
     public Optional<Conta> findById(String id) {
-        return Optional.empty();
+        var res = contaRepository.findById(id);
+        return contaRepository.findById(id);
     }
 
 
