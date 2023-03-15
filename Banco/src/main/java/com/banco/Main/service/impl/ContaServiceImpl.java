@@ -70,9 +70,9 @@ public class ContaServiceImpl implements ContaService {
     public DepositoDto deposito(DepositoDto depositoDto) {
 
         Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
-        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
+        conta.setSaldo(conta.getSaldo() + depositoDto.getValor());
 
-        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
+        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValor());
         transacao.setContaOrigem(conta.getId());
 
         contaRepository.save(conta);
@@ -80,13 +80,7 @@ public class ContaServiceImpl implements ContaService {
 
         return depositoDto;
     }
-
-
-
-
-
-
-
+    
     @Override
     public Optional<Conta> findById(String id) {
         return Optional.empty();

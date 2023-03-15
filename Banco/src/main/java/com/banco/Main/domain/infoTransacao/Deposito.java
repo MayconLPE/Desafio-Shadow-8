@@ -21,7 +21,7 @@ public class Deposito {
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
     @Column(nullable = false)
-    private Double valorDeposito;
+    private Double valor;
     @Column(nullable = false)
     private Double saldoAnterior;
     @Column(nullable = false)
