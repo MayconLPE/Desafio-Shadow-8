@@ -36,4 +36,7 @@ public class Transacao {
     private String contaOrigem;
     private String contaDestino;
 
+    private Double saldoAtual;
+    private Double saldoAntigo;
+
 }

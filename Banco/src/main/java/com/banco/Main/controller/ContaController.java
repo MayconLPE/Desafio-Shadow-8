@@ -5,6 +5,7 @@ import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.dtos.DepositoDto;
 import com.banco.Main.useCases.dtos.SaldoDto;
+import com.banco.Main.useCases.dtos.SaqueDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -50,7 +51,11 @@ public class ContaController {
         DepositoDto depositoDto1 = contaService.deposito(depositoDto);
         return ResponseEntity.status(HttpStatus.OK).body(depositoDto1);
     }
-
+    @PostMapping(value = "/sacar")
+    public ResponseEntity<SaqueDto> sacar(@RequestBody SaqueDto saqueDto) {
+        SaqueDto saqueDto1 = contaService.saque(saqueDto);
+        return  ResponseEntity.status(HttpStatus.OK).body(saqueDto1);
+    }
 
 
 

@@ -5,6 +5,7 @@ import com.banco.Main.domain.Conta;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.dtos.DepositoDto;
 import com.banco.Main.useCases.dtos.SaldoDto;
+import com.banco.Main.useCases.dtos.SaqueDto;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,7 +21,7 @@ public interface ContaService {
     Page<Conta> findAll(Pageable pageable);
 
     DepositoDto deposito(DepositoDto depositoDto);
-
+    SaqueDto saque(SaqueDto saqueDto);
 
 
 

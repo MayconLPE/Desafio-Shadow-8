@@ -7,14 +7,26 @@ import java.time.LocalDateTime;
 
 public class GeradorTransacao {
 
-    public static Transacao gerar(String id, TipoTransacao tipoTransacao, Double valor) {
+    public static Transacao deposito(String id, TipoTransacao tipoTransacao, Double valor) {
+
         LocalDateTime data = LocalDateTime.now();
-        Transacao transacao = new Transacao();
-        transacao.setId(id);
-        transacao.setTipoTransacao(tipoTransacao);
-        transacao.setValor(valor);
-        transacao.setDataTransacao(data);
-        return transacao;
+        Transacao deposito = new Transacao();
+        deposito.setId(id);
+        deposito.setTipoTransacao(tipoTransacao);
+        deposito.setValor(valor);
+        deposito.setDataTransacao(data);
+        return deposito;
+    }
+
+    public static Transacao saque(String id, TipoTransacao tipoTransacao, Double valor) {
+
+        LocalDateTime data = LocalDateTime.now();
+        Transacao saque = new Transacao();
+        saque.setId(id);
+        saque.setTipoTransacao(tipoTransacao);
+        saque.setValor(valor);
+        saque.setDataTransacao(data);
+        return saque;
     }
 
 }

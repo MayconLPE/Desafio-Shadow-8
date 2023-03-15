@@ -21,6 +21,8 @@ public class DepositoDto {
     private Integer agencia;
     private Double valorDeposito;
     private LocalDateTime data = LocalDateTime.now();
+    private Double saldoAtual;
+    private Double saldoAntigo;
 
 
 }

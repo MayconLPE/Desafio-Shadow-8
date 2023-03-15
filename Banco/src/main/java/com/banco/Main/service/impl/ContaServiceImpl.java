@@ -10,6 +10,7 @@ import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.dtos.DepositoDto;
+import com.banco.Main.useCases.dtos.SaqueDto;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,13 +72,30 @@ public class ContaServiceImpl implements ContaService {
         Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
         conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
 
-        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
+        Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
         transacao.setContaDestino(conta.getId());
+        transacao.setSaldoAtual(conta.getSaldo());
 
         contaRepository.save(conta);
         transacaoService.save(transacao);
 
         return depositoDto;
+    }
+
+
+    @Override
+    public SaqueDto saque(SaqueDto saqueDto) {
+
+        Conta conta = findByNumeroConta(saqueDto.getNumeroConta());
+        conta.setSaldo(conta.getSaldo() - saqueDto.getValor());
+
+        Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE,saqueDto.getValor());
+        transacao.setContaDestino(conta.getId());
+        transacao.setSaldoAtual(conta.getSaldo());
+
+
+        contaRepository.save(conta);
+        return saqueDto;
     }
 
     @Override
