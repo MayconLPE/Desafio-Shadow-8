@@ -8,6 +8,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.validation.constraints.PositiveOrZero;
 import java.time.LocalDateTime;
 
 @Getter
@@ -24,6 +25,8 @@ public class Transacao {
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid")
     @GeneratedValue(generator = "UUIDGenerator")
     private String id;
+//    @Min(value = 0L, message = "Insira um valor positivo")
+    @PositiveOrZero
     private Double valor;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")

@@ -6,21 +6,18 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class DepositoDto {
-
+public class SaqueDto {
 
     private Integer numeroConta;
     private Integer digito;
     private Integer agencia;
-    private Double valorDeposito;
+    private Double valor;
     private LocalDateTime data = LocalDateTime.now();
-
 
 }

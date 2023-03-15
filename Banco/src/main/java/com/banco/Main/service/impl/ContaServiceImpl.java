@@ -10,7 +10,6 @@ import com.banco.Main.service.TransacaoService;
 import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.CriarNovaContaDto;
 import com.banco.Main.useCases.dtos.DepositoDto;
-import com.banco.Main.useCases.dtos.SaldoDto;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,17 +69,17 @@ public class ContaServiceImpl implements ContaService {
     public DepositoDto deposito(DepositoDto depositoDto) {
 
         Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
-        conta.setSaldo(conta.getSaldo() + depositoDto.getValor());
+        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
 
-        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValor());
-        transacao.setContaOrigem(conta.getId());
+        Transacao transacao = GeradorTransacao.gerar(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito());
+        transacao.setContaDestino(conta.getId());
 
         contaRepository.save(conta);
         transacaoService.save(transacao);
 
         return depositoDto;
     }
-    
+
     @Override
     public Optional<Conta> findById(String id) {
         return Optional.empty();
