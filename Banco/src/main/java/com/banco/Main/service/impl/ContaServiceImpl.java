@@ -63,32 +63,29 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public DepositoResponseDto deposito(DepositoDto depositoDto) {
+    public DepositoResponseDto deposito(DepositoRequestDto depositoRequestDto) {
 
         var responseDto = new DepositoResponseDto();
-        Conta conta = findByNumeroConta(depositoDto.getNumeroConta());
+        Conta conta = findByNumeroConta(depositoRequestDto.getNumeroConta());
 
-        responseDto.setSaldoAntigo(conta.getSaldo());
-        Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO,depositoDto.getValorDeposito(), conta.getSaldo());
-        transacao.setContaDestino(conta.getId());
-        conta.setSaldo(conta.getSaldo() + depositoDto.getValorDeposito());
-        responseDto.setSaldoAtual(conta.getSaldo());
-        transacao.setSaldoAtual(conta.getSaldo());
+        Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO, depositoRequestDto.getValorDeposito(), conta.getSaldo());
+        transacao.setContaDestino(conta.getId()); // id da conta conta destino
+        responseDto.setSaldoAntigo(conta.getSaldo()); // respostas saldo antigo
+        conta.setSaldo(conta.getSaldo() + depositoRequestDto.getValorDeposito()); // depositando valor no saldo
+        responseDto.setSaldoAtual(conta.getSaldo()); // resposta saldo atual
+        transacao.setSaldoAtual(conta.getSaldo()); // salvando em transações
 
         contaRepository.save(conta);
         transacaoService.save(transacao);
 
-        responseDto.setData(depositoDto.getData());
-        responseDto.setNumeroConta(depositoDto.getNumeroConta());
-        responseDto.setDigito(depositoDto.getDigito());
-        responseDto.setAgencia(depositoDto.getAgencia());
-        responseDto.setValorDeposito(depositoDto.getValorDeposito());
+        responseDto.setData(depositoRequestDto.getData());
+        responseDto.setNumeroConta(depositoRequestDto.getNumeroConta());
+        responseDto.setDigito(depositoRequestDto.getDigito());
+        responseDto.setAgencia(depositoRequestDto.getAgencia());
+        responseDto.setValorDeposito(depositoRequestDto.getValorDeposito());
 
         return responseDto;
-
     }
-
-
     @Override
     public SaqueDto saque(SaqueDto saqueDto) {
 
@@ -102,6 +99,7 @@ public class ContaServiceImpl implements ContaService {
 
 
         contaRepository.save(conta);
+        transacaoService.save(transacao);
         return saqueDto;
     }
 

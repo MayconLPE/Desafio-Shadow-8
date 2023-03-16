@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class DepositoDto {
+public class DepositoRequestDto {
 
 
     private Integer numeroConta;

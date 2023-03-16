@@ -44,8 +44,8 @@ public class ContaController {
         return new SaldoDto(contaService.findByNumeroConta(numeroConta));
     }
     @PostMapping(value = "/depositar")
-    public ResponseEntity<DepositoResponseDto> depositar(@RequestBody DepositoDto depositoDto) {
-        DepositoResponseDto depositoDto1 = contaService.deposito(depositoDto);
+    public ResponseEntity<DepositoResponseDto> depositar(@RequestBody DepositoRequestDto depositoRequestDto) {
+        DepositoResponseDto depositoDto1 = contaService.deposito(depositoRequestDto);
         return ResponseEntity.status(HttpStatus.OK).body(depositoDto1);
     }
     @PostMapping(value = "/sacar")
