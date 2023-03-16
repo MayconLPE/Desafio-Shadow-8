@@ -71,6 +71,7 @@ public class ContaServiceImpl implements ContaService {
         Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO, depositoRequestDto.getValorDeposito(), conta.getSaldo());
         transacao.setContaDestino(conta.getId()); // id da conta conta destino
         responseDto.setSaldoAntigo(conta.getSaldo()); // respostas saldo antigo
+
         conta.setSaldo(conta.getSaldo() + depositoRequestDto.getValorDeposito()); // depositando valor no saldo
         responseDto.setSaldoAtual(conta.getSaldo()); // resposta saldo atual
         transacao.setSaldoAtual(conta.getSaldo()); // salvando em transações
@@ -87,25 +88,35 @@ public class ContaServiceImpl implements ContaService {
         return responseDto;
     }
     @Override
-    public SaqueDto saque(SaqueDto saqueDto) {
+    public SaqueResponseDto saque(SaqueRequestDto saqueRequestDto) {
 
-        Conta conta = findByNumeroConta(saqueDto.getNumeroConta());
+        var responseDto = new SaqueResponseDto();
+        Conta conta = findByNumeroConta(saqueRequestDto.getNumeroConta());
 
-        conta.setSaldo(conta.getSaldo() - saqueDto.getValor());
+        conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
 
-        Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE,saqueDto.getValor());
+        Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE, saqueRequestDto.getValorSaque(), conta.getSaldo());
         transacao.setContaDestino(conta.getId());
-        transacao.setSaldoAtual(conta.getSaldo());
+        responseDto.setSaldoAntigo(conta.getSaldo());
 
+        conta.setSaldo(conta.getSaldo() + saqueRequestDto.getValorSaque());
+        responseDto.setSaldoAtual(conta.getSaldo());
+        transacao.setSaldoAtual(conta.getSaldo());
 
         contaRepository.save(conta);
         transacaoService.save(transacao);
-        return saqueDto;
+
+        responseDto.setData(saqueRequestDto.getData());
+        responseDto.setNumeroConta(saqueRequestDto.getNumeroConta());
+        responseDto.setDigito(saqueRequestDto.getDigito());
+        responseDto.setAgencia(saqueRequestDto.getAgencia());
+        responseDto.setValorSaque(saqueRequestDto.getValorSaque());
+
+        return responseDto;
     }
 
 
-
-
+    
 
 //    @Override
 //    public TransferenciaDTO pix(TransferenciaDTO transferenciaDTO) {

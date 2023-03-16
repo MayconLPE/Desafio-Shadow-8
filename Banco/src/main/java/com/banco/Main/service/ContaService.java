@@ -17,7 +17,7 @@ public interface ContaService {
     Conta updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
     DepositoResponseDto deposito(DepositoRequestDto depositoRequestDto);
-    SaqueDto saque(SaqueDto saqueDto);
+    SaqueResponseDto saque(SaqueRequestDto saqueRequestDto);
 
 //    TransferenciaDTO pix(TransferenciaDTO transferenciaDTO);
 

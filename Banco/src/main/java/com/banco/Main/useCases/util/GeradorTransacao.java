@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 public class GeradorTransacao {
 
-    public static Transacao deposito(String id, TipoTransacao tipoTransacao, Double valor, Double saldoatual) {
+    public static Transacao deposito(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();
         Transacao deposito = new Transacao();
@@ -15,11 +15,11 @@ public class GeradorTransacao {
         deposito.setTipoTransacao(tipoTransacao);
         deposito.setValor(valor);
         deposito.setDataTransacao(data);
-        deposito.setSaldoAntigo(saldoatual);
+        deposito.setSaldoAntigo(saldoAtual);
         return deposito;
     }
 
-    public static Transacao saque(String id, TipoTransacao tipoTransacao, Double valor) {
+    public static Transacao saque(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();
         Transacao saque = new Transacao();
@@ -27,6 +27,7 @@ public class GeradorTransacao {
         saque.setTipoTransacao(tipoTransacao);
         saque.setValor(valor);
         saque.setDataTransacao(data);
+        saque.setSaldoAntigo(saldoAtual);
         return saque;
     }
 
