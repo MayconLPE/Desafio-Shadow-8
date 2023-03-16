@@ -99,11 +99,11 @@ public class ContaServiceImpl implements ContaService {
         transacao.setContaDestino(conta.getId());
         responseDto.setSaldoAntigo(conta.getSaldo());
 
-        conta.setSaldo(conta.getSaldo() + saqueRequestDto.getValorSaque());
+        conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
         responseDto.setSaldoAtual(conta.getSaldo());
         transacao.setSaldoAtual(conta.getSaldo());
 
-        contaRepository.save(conta);
+        contaRepository.save(conta); 
         transacaoService.save(transacao);
 
         responseDto.setData(saqueRequestDto.getData());
@@ -116,7 +116,7 @@ public class ContaServiceImpl implements ContaService {
     }
 
 
-    
+
 
 //    @Override
 //    public TransferenciaDTO pix(TransferenciaDTO transferenciaDTO) {
