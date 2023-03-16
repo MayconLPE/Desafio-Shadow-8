@@ -17,11 +17,11 @@ public class ContaAdapter {
         return contaRepository.save(conta);
     }
 
-    public Optional<Cliente> findByDocumento(String documento) {
+    public Cliente findByDocumento(String documento) {
         return contaRepository.findByDocumento(documento);
     }
 
-    public Optional<Conta> findByNumeroConta(Integer numeroConta) {
+    public Conta findByNumeroConta(Integer numeroConta) {
         return contaRepository.findByNumeroConta(numeroConta);
     }
 }

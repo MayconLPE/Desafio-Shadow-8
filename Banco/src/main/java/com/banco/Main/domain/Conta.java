@@ -3,6 +3,8 @@ package com.banco.Main.domain;
 import com.banco.Main.domain.infoConta.ContaStatus;
 import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -16,6 +18,7 @@ import java.io.Serializable;
 @Setter
 @Table(name = "CONTAS")
 @Entity
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class Conta implements Serializable {
     private static final long serialVersionUID = 1L;
 
@@ -28,13 +31,16 @@ public class Conta implements Serializable {
     private String idCliente;
     @Column(nullable = false)
     @NotBlank
+    private String nomeCliente;
+    @Column(nullable = false)
+    @NotBlank
     private String documento;
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ContaStatus contaStatus; // PENDENTE, ATIVO, BLOQUEADO.
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
-    @Column(nullable = false)
-    private TipoConta tipoConta;  //PJ, PF, GOV;
+    private TipoConta tipoConta; //PJ, PF, GOV;
     @Column(nullable = false)
     private Integer agencia; // 5 Digitos
     @Column(nullable = false, unique = true)

@@ -14,20 +14,17 @@ public class GeradorContaUtil {
     PegarIdClienteUtil pegarIdClienteUtil;
 
     Integer agencia = 12345;
-
     int min = 100000;
     int max = 500000;
-
-
 
     public Conta gerarContaInit(Cliente cliente) {
         int numeroContaRandom = (int) Math.floor((Math.random()) * (max - min + 1) + min);
 
         var conta = Conta.builder()
                 .idCliente(cliente.getId())
+                .nomeCliente(cliente.getNome())
                 .documento(cliente.getDocumento())
                 .contaStatus(ContaStatus.PENDENTE)
-                .nomeBanco(NomeBanco.BANCOPE)
                 .tipoConta(cliente.getTipoConta())
                 .agencia(agencia)
                 .numeroConta(numeroContaRandom)
@@ -43,9 +40,9 @@ public class GeradorContaUtil {
 
         var conta = Conta.builder()
                 .idCliente(idCliente.get().getId())
+                .nomeCliente(idCliente.get().getNome())
                 .documento(criarNovaContaDto.getDocumento())
                 .contaStatus(ContaStatus.PENDENTE)
-                .nomeBanco(NomeBanco.BANCOPE)
                 .tipoConta(criarNovaContaDto.getTipoConta())
                 .agencia(agencia)
                 .numeroConta(numeroContaRandom)

@@ -12,8 +12,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class AlterarStatusContaDto {
+public class ContaDto {
 
+    private String id;
     private String numeroConta;
-    private String documento;
 }

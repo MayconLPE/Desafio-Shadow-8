@@ -1,8 +1,8 @@
 package com.banco.Main.service;
 
-import com.banco.Main.useCases.dtos.DepositoDto;
+import com.banco.Main.useCases.dtos.DepositoRequestDto;
 
 public interface DepositoService {
 
-    DepositoDto save(DepositoDto depositoDto);
+    DepositoRequestDto save(DepositoRequestDto depositoRequestDto);
 }
