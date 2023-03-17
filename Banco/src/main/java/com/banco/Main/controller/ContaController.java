@@ -44,41 +44,18 @@ public class ContaController {
         return new SaldoDto(contaService.findByNumeroConta(numeroConta));
     }
     @PostMapping(value = "/depositar")
-    public ResponseEntity<DepositoResponseDto> depositar(@RequestBody DepositoRequestDto depositoRequestDto) {
-        DepositoResponseDto depositoDto = contaService.deposito(depositoRequestDto);
-        return ResponseEntity.status(HttpStatus.OK).body(depositoDto);
+    public ResponseEntity<?> depositar(@RequestBody DepositoRequestDto depositoRequestDto) {
+        return contaService.deposito(depositoRequestDto);
     }
     @PostMapping(value = "/sacar")
     public ResponseEntity<SaqueResponseDto> sacar(@RequestBody SaqueRequestDto saqueRequestDto) {
         SaqueResponseDto saqueDto = contaService.saque(saqueRequestDto);
         return  ResponseEntity.status(HttpStatus.OK).body(saqueDto);
     }
-
-
-
-
-//    @GetMapping(value = "saldo/{numeroConta}") // Exibir saldo da conta
-//    public ResponseEntity<Conta> saldoConta(@PathVariable Integer numeroConta) {
-//        return new ResponseEntity<>(contaService.saldoConta(), HttpStatus.OK);
-//    }
-//    @PostMapping(value = "/alterarStatus/{numeroConta}")
-//    public ResponseEntity<?> alterarStatusAtivo(@PathVariable Integer numeroConta) {
-//       this.contaService.saveStatusConta(numeroConta);
-//       return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
-//
-//    @PutMapping(value = "/depositar/{valor}/{id}")
-//    public ResponseEntity<?> depositar(@PathVariable Double valor,@PathVariable String id) {
-//        this.contaService.depositar(valor, id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//    @GetMapping(value = "saldo/{id}")
-//    public ResponseEntity<?> saldo(@PathVariable String id){
-//        Conta c = contaService.findById(id);
-//        return new ResponseEntity<>(c.getSaldo(), HttpStatus.OK);
-//
-//    }
-
+    @PostMapping(value = "/pix")
+    public ResponseEntity<TransferenciaResponseDTO> pix(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+        TransferenciaResponseDTO pixDto = contaService.pix(transferenciaRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(pixDto);
+    }
 
 }

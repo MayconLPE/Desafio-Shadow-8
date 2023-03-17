@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Setter
 @Getter
-public class TransferenciaDTO {
+public class TransferenciaRequestDTO {
 
     @Id
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid")

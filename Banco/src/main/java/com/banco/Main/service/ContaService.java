@@ -5,6 +5,7 @@ import com.banco.Main.domain.Conta;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
@@ -16,15 +17,9 @@ public interface ContaService {
     Conta updateStatusContaAtivo(Integer numeroConta);
     Conta updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
-    DepositoResponseDto deposito(DepositoRequestDto depositoRequestDto);
+    ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
     SaqueResponseDto saque(SaqueRequestDto saqueRequestDto);
-
-//    TransferenciaDTO pix(TransferenciaDTO transferenciaDTO);
-
-
-
-
-
+    TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO);
 
     Optional<Conta> findById(String id);
 

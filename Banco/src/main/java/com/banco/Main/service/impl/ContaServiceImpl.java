@@ -14,6 +14,9 @@ import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -63,11 +66,17 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public DepositoResponseDto deposito(DepositoRequestDto depositoRequestDto) {
+    public ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto) {
 
         var responseDto = new DepositoResponseDto();
         Conta conta = findByNumeroConta(depositoRequestDto.getNumeroConta());
 
+        if (!conta.getContaStatus().equals(ContaStatus.ATIVO) ) {
+            System.out.println("São diferentes");
+            return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
+//           throw new RuntimeException("Deu Erro");
+
+        }
         Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO, depositoRequestDto.getValorDeposito(), conta.getSaldo());
         transacao.setContaDestino(conta.getId()); // id da conta conta destino
         responseDto.setSaldoAntigo(conta.getSaldo()); // respostas saldo antigo
@@ -85,11 +94,10 @@ public class ContaServiceImpl implements ContaService {
         responseDto.setAgencia(depositoRequestDto.getAgencia());
         responseDto.setValorDeposito(depositoRequestDto.getValorDeposito());
 
-        return responseDto;
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @Override
     public SaqueResponseDto saque(SaqueRequestDto saqueRequestDto) {
-
         var responseDto = new SaqueResponseDto();
         Conta conta = findByNumeroConta(saqueRequestDto.getNumeroConta());
 
@@ -115,7 +123,37 @@ public class ContaServiceImpl implements ContaService {
         return responseDto;
     }
 
+    @Override
+    public TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO) {
+        var responseDto = new TransferenciaResponseDTO();
+        Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
+        Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
 
+//        if (contaOringem.getSaldo() < transferenciaRequestDTO.getValor()) {
+//            throw new RuntimeException("Saldo insuficiente para trasnferencia");
+//        }
+
+        Transacao transacao = GeradorTransacao.pix(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        transacao.setContaDestino(contaDestino.getId());
+        transacao.setContaOrigem(contaOringem.getId());
+        responseDto.setSaldoAntigo(contaDestino.getSaldo());
+
+        contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
+        contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
+        responseDto.setSaldoAtual(contaDestino.getSaldo());
+        transacao.setSaldoAtual(contaDestino.getSaldo());
+
+        contaRepository.save(contaDestino);
+        contaRepository.save(contaOringem);
+        transacaoService.save(transacao);
+
+        responseDto.setDataTransacao(transferenciaRequestDTO.getDataTransacao());
+        responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
+        responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
+        responseDto.setValor(transferenciaRequestDTO.getValor());
+
+        return responseDto;
+    }
 
 
 //    @Override
