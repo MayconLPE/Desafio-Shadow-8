@@ -74,8 +74,6 @@ public class ContaServiceImpl implements ContaService {
         if (!conta.getContaStatus().equals(ContaStatus.ATIVO) ) {
             System.out.println("São diferentes");
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
-//           throw new RuntimeException("Deu Erro");
-
         }
         Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO, depositoRequestDto.getValorDeposito(), conta.getSaldo());
         transacao.setContaDestino(conta.getId()); // id da conta conta destino
@@ -129,19 +127,16 @@ public class ContaServiceImpl implements ContaService {
         Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
         Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
 
-//        if (contaOringem.getSaldo() < transferenciaRequestDTO.getValor()) {
-//            throw new RuntimeException("Saldo insuficiente para trasnferencia");
-//        }
 
         Transacao transacao = GeradorTransacao.pix(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
         transacao.setContaDestino(contaDestino.getId());
         transacao.setContaOrigem(contaOringem.getId());
-        responseDto.setSaldoAntigo(contaDestino.getSaldo());
+        responseDto.setSaldoAntigo(contaOringem.getSaldo());
 
         contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
         contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
-        responseDto.setSaldoAtual(contaDestino.getSaldo());
-        transacao.setSaldoAtual(contaDestino.getSaldo());
+        responseDto.setSaldoAtual(contaOringem.getSaldo());
+        transacao.setSaldoAtual(contaOringem.getSaldo());
 
         contaRepository.save(contaDestino);
         contaRepository.save(contaOringem);
@@ -154,20 +149,6 @@ public class ContaServiceImpl implements ContaService {
 
         return responseDto;
     }
-
-
-//    @Override
-//    public TransferenciaDTO pix(TransferenciaDTO transferenciaDTO) {
-//        Conta contaOrigem = findByNumeroConta(transferenciaDTO.getContaOrigem());
-//        Conta contaDestino = findByNumeroConta(transferenciaDTO.getContaDestino());
-//
-//        contaRepository.alterSaldoConta(contaOrigem.getNumeroConta(),contaOrigem.getSaldo() - transferenciaDTO.getValor());
-//        contaRepository.alterSaldoConta(contaDestino.getNumeroConta(), contaDestino.getSaldo() + transferenciaDTO.getValor());
-//
-//        return null;
-//    }
-
-
 
     @Override
     public Optional<Conta> findById(String id) {

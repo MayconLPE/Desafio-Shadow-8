@@ -24,7 +24,7 @@ public class DepositoRequestDto {
     private LocalDateTime data = LocalDateTime.now();
     private Double saldoAtual;
     private Double saldoAntigo;
-    private ContaStatus contaStatus;
+
 
 
 }

@@ -25,7 +25,7 @@ public class DepositoResponseDto {
     private Double saldoAtual;
     private Double saldoAntigo;
 
-    private ContaStatus contaStatus;
+
 
 
 }
