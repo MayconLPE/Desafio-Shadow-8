@@ -17,6 +17,7 @@ public class SaqueRequestDto {
     private Integer agencia;
     private Double valorSaque;
     private LocalDateTime data = LocalDateTime.now();
-    private Double saldoAtual;
     private Double saldoAntigo;
+    private Double saldoAtual;
+
 }
