@@ -1,5 +1,6 @@
 package com.banco.Main.useCases.dtos;
 
+import com.banco.Main.domain.infoConta.ContaStatus;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -21,8 +22,9 @@ public class DepositoRequestDto {
     private Integer agencia;
     private Double valorDeposito;
     private LocalDateTime data = LocalDateTime.now();
-    private Double saldoAtual;
     private Double saldoAntigo;
+    private Double saldoAtual;
+
 
 
 }

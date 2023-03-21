@@ -15,5 +15,5 @@ import lombok.Setter;
 public class ContaDto {
 
     private String id;
-    private String numeroConta;
+    private Integer numeroConta;
 }
