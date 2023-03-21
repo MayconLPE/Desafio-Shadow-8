@@ -48,9 +48,8 @@ public class ContaController {
         return contaService.deposito(depositoRequestDto);
     }
     @PostMapping(value = "/sacar")
-    public ResponseEntity<SaqueResponseDto> sacar(@RequestBody SaqueRequestDto saqueRequestDto) {
-        SaqueResponseDto saqueDto = contaService.saque(saqueRequestDto);
-        return  ResponseEntity.status(HttpStatus.OK).body(saqueDto);
+    public ResponseEntity<?> sacar(@RequestBody SaqueRequestDto saqueRequestDto) {
+        return contaService.saque(saqueRequestDto);
     }
     @PostMapping(value = "/pix")
     public ResponseEntity<TransferenciaResponseDTO> pix(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {

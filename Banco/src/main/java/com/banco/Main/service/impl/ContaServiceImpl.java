@@ -72,9 +72,9 @@ public class ContaServiceImpl implements ContaService {
         Conta conta = findByNumeroConta(depositoRequestDto.getNumeroConta());
 
         if (!conta.getContaStatus().equals(ContaStatus.ATIVO) ) {
-            System.out.println("São diferentes");
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
         }
+
         Transacao transacao = GeradorTransacao.deposito(conta.getId(), TipoTransacao.DEPOSITO, depositoRequestDto.getValorDeposito(), conta.getSaldo());
         transacao.setContaDestino(conta.getId()); // id da conta conta destino
         responseDto.setSaldoAntigo(conta.getSaldo()); // respostas saldo antigo
@@ -95,9 +95,14 @@ public class ContaServiceImpl implements ContaService {
         return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @Override
-    public SaqueResponseDto saque(SaqueRequestDto saqueRequestDto) {
+    public ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto) {
         var responseDto = new SaqueResponseDto();
         Conta conta = findByNumeroConta(saqueRequestDto.getNumeroConta());
+
+        if (!conta.getContaStatus().equals(ContaStatus.ATIVO) ) {
+            System.out.println("São diferentes");
+            return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
+        }
 
         conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
 
@@ -118,7 +123,7 @@ public class ContaServiceImpl implements ContaService {
         responseDto.setAgencia(saqueRequestDto.getAgencia());
         responseDto.setValorSaque(saqueRequestDto.getValorSaque());
 
-        return responseDto;
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     @Override
