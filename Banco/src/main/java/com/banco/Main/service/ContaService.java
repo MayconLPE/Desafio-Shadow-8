@@ -18,10 +18,15 @@ public interface ContaService {
     Conta updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
     ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
-
     ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto);
-//    SaqueResponseDto saque(SaqueRequestDto saqueRequestDto);
     TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO);
+
+    // DOC
+
+    // TED
+
+
+    Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable);
 
     Optional<Conta> findById(String id);
 

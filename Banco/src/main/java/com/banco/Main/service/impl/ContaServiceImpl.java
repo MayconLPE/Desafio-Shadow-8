@@ -13,12 +13,13 @@ import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -100,7 +101,6 @@ public class ContaServiceImpl implements ContaService {
         Conta conta = findByNumeroConta(saqueRequestDto.getNumeroConta());
 
         if (!conta.getContaStatus().equals(ContaStatus.ATIVO) ) {
-            System.out.println("São diferentes");
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
         }
 
@@ -154,6 +154,12 @@ public class ContaServiceImpl implements ContaService {
 
         return responseDto;
     }
+
+    @Override
+    public Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable) {
+        return null;
+    }
+
 
     @Override
     public Optional<Conta> findById(String id) {
