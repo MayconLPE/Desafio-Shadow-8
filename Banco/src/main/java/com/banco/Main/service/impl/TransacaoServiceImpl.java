@@ -18,4 +18,8 @@ public class TransacaoServiceImpl implements TransacaoService {
         return transacaoRepository.save(transacao);
     }
 
+    @Override
+    public Page<Transacao> findAll(Pageable pageable) {
+        return transacaoRepository.findAll(pageable);
+    }
 }
