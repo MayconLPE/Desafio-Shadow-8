@@ -16,9 +16,7 @@ public interface ContaRepository extends JpaRepository<Conta, String> {
     Cliente findByDocumento(String documento);
 
     Conta findByNumeroConta(Integer numeroConta);
-//    @Modifying
-//    @Query(value = "UPDATE CONTA c SET c.saldo= :valor WHERE c.numero_conta = :numero_conta ")
-//    void alterSaldoConta(@Param("numeroConta")Integer numeroConta,@Param("valor")Double valor);
+
 
 
 }

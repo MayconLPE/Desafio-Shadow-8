@@ -35,8 +35,8 @@ public class Transacao {
     private TipoTransacao tipoTransacao; /// PIX, TED, DOC, DEPOSITO;
     private String contaOrigem;
     private String contaDestino;
-
     private Double saldoAtual;
     private Double saldoAntigo;
+
 
 }

@@ -2,6 +2,8 @@ package com.banco.Main.service;
 
 
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.Transacao;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,8 +28,9 @@ public interface ContaService {
     // TED
 
 
-    Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable);
+//    Page<ExtratoResponseDto> extratoNumeroConta(Integer numeroConta, Integer digito, Integer agencia, Pageable pageable);
+//    Page<ExtratoResponseDto> extratoNumeroContaTipoTransacao(Integer numeroConta, Integer digito, Integer agencia, TipoTransacao tipoTransacao, Pageable pageable);
+//    Page<ExtratoResponseDto> findByIdContaTipoTransacao(String id, TipoTransacao tipoTransacao, Pageable pageable);
 
     Optional<Conta> findById(String id);
-
 }

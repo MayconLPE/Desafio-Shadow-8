@@ -1,6 +1,7 @@
 package com.banco.Main.controller;
 
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,5 +57,28 @@ public class ContaController {
         TransferenciaResponseDTO pixDto = contaService.pix(transferenciaRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(pixDto);
     }
+
+
+
+
+
+//    @GetMapping(value = "/extrato")
+//    public ResponseEntity<Page<ExtratoResponseDto>> extrato(@RequestParam(name = "numeroConta") Integer numeroConta,
+//                                                            @RequestParam(name = "digito") Integer digito,
+//                                                            @RequestParam(name = "agencia") Integer agencia,
+//                                                            @RequestParam(name = "filter", required = false) TipoTransacao tipoTransacao,
+//                                                            Pageable pageable){
+////        if (tipoTransacao == null) {
+//            Page<ExtratoResponseDto> extrato = contaService.findByIdConta(agencia, numeroConta, digito,pageable);
+//            return ResponseEntity.ok().body(extrato);
+////        }
+////        Page<ExtratoResponseDto> extrato = contaService.extratoNumeroContaTipoTransacao(numeroConta,digito,agencia,tipoTransacao,pageable);
+////        return ResponseEntity.ok().body(extrato);
+//    }
+
+
+
+
+
 
 }

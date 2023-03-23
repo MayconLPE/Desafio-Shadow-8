@@ -11,6 +11,7 @@ import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.*;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,8 +20,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ContaServiceImpl implements ContaService {
@@ -34,6 +36,8 @@ public class ContaServiceImpl implements ContaService {
     @Autowired
     ContaAdapter contaAdapter;
 
+//    @Autowired
+//    ModelMapper modelMapper;
 
     @Override
     public Conta save(Conta conta) {
@@ -147,18 +151,33 @@ public class ContaServiceImpl implements ContaService {
         contaRepository.save(contaOringem);
         transacaoService.save(transacao);
 
-        responseDto.setDataTransacao(transferenciaRequestDTO.getDataTransacao());
+        responseDto.setDataTransacao(LocalDateTime.now());
         responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
         responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
         responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.PIX);
+
 
         return responseDto;
     }
 
-    @Override
-    public Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable) {
-        return null;
-    }
+//    @Override
+//    public ExtratoResponseDto findByIdConta(Integer numeroConta) {
+//        return null;
+//    }
+
+
+    //
+    //
+
+
+
+//    @Override
+//    public Page<ExtratoResponseDto> findByIdContaTipoTransacao(String id, TipoTransacao tipoTransacao, Pageable pageable) {
+//        return null;
+//    }
+
+
 
 
     @Override
@@ -166,9 +185,6 @@ public class ContaServiceImpl implements ContaService {
         var res = contaRepository.findById(id);
         return contaRepository.findById(id);
     }
-
-
-
 
 
 
