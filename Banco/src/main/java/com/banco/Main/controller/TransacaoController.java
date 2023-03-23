@@ -22,8 +22,8 @@ public class TransacaoController {
 
     }
     @GetMapping(value = "/{contaOrigem}")
-    public ResponseEntity<List<Transacao>> findByNumeroConta(@PathVariable(value = "contaOrigem") String contaOrigem) {
-        List<Transacao> transacao = transacaoService.findByContaOrigem(contaOrigem);
+    public ResponseEntity<Page<Transacao>> findByNumeroConta(@PathVariable(value = "contaOrigem") String contaOrigem, Pageable pageable) {
+        Page<Transacao> transacao = transacaoService.findByContaOrigem(contaOrigem, pageable);
         return ResponseEntity.ok().body(transacao);
     }
 

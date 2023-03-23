@@ -11,10 +11,8 @@ import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.*;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +20,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 public class ContaServiceImpl implements ContaService {
@@ -132,12 +129,12 @@ public class ContaServiceImpl implements ContaService {
 
     @Override
     public TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO) {
+
         var responseDto = new TransferenciaResponseDTO();
         Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
         Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
 
-
-        Transacao transacao = GeradorTransacao.pix(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
         transacao.setContaDestino(contaDestino.getId());
         transacao.setContaOrigem(contaOringem.getId());
         responseDto.setSaldoAntigo(contaOringem.getSaldo());
@@ -157,6 +154,62 @@ public class ContaServiceImpl implements ContaService {
         responseDto.setValor(transferenciaRequestDTO.getValor());
         responseDto.setTipoTransacao(TipoTransacao.PIX);
 
+        return responseDto;
+    }
+    @Override
+    public TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO) {
+        var responseDto = new TransferenciaResponseDTO();
+        Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
+        Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
+
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.DOC, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        transacao.setContaDestino(contaDestino.getId());
+        transacao.setContaOrigem(contaOringem.getId());
+        responseDto.setSaldoAntigo(contaOringem.getSaldo());
+
+        contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
+        contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
+        responseDto.setSaldoAtual(contaOringem.getSaldo());
+        transacao.setSaldoAtual(contaOringem.getSaldo());
+
+        contaRepository.save(contaDestino);
+        contaRepository.save(contaOringem);
+        transacaoService.save(transacao);
+
+        responseDto.setDataTransacao(LocalDateTime.now());
+        responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
+        responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
+        responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.DOC);
+
+        return responseDto;
+    }
+
+    @Override
+    public TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO) {
+        var responseDto = new TransferenciaResponseDTO();
+        Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
+        Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
+
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.TED, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        transacao.setContaDestino(contaDestino.getId());
+        transacao.setContaOrigem(contaOringem.getId());
+        responseDto.setSaldoAntigo(contaOringem.getSaldo());
+
+        contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
+        contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
+        responseDto.setSaldoAtual(contaOringem.getSaldo());
+        transacao.setSaldoAtual(contaOringem.getSaldo());
+
+        contaRepository.save(contaDestino);
+        contaRepository.save(contaOringem);
+        transacaoService.save(transacao);
+
+        responseDto.setDataTransacao(LocalDateTime.now());
+        responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
+        responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
+        responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.TED);
 
         return responseDto;
     }

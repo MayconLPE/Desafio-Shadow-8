@@ -33,8 +33,8 @@ public class TransacaoServiceImpl implements TransacaoService {
     //
 
     @Override
-    public List<Transacao> findByContaOrigem(String contaOrigem) {
-        return transacaoRepository.findByContaOrigem(contaOrigem);
+    public Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable) {
+        return transacaoRepository.findByContaOrigem(contaOrigem, pageable);
     }
 
 

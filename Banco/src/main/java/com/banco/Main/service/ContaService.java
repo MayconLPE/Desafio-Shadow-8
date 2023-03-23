@@ -22,10 +22,10 @@ public interface ContaService {
     ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
     ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto);
     TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO);
+    TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO);
+    TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO);
 
-    // DOC
 
-    // TED
 
 
 //    Page<ExtratoResponseDto> extratoNumeroConta(Integer numeroConta, Integer digito, Integer agencia, Pageable pageable);

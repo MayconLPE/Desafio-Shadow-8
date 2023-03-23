@@ -14,7 +14,7 @@ public interface TransacaoService {
     //
     //
 
-    List<Transacao> findByContaOrigem(String contaOrigem);
+    Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable);
 
 
 //    Page<Transacao> findByNumeroContaTipoTransacao(Integer contaOrigem, TipoTransacao tipoTransacao, Pageable pageable);

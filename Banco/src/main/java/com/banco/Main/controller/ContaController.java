@@ -57,6 +57,16 @@ public class ContaController {
         TransferenciaResponseDTO pixDto = contaService.pix(transferenciaRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(pixDto);
     }
+    @PostMapping(value = "/doc")
+    public ResponseEntity<TransferenciaResponseDTO> doc(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+        TransferenciaResponseDTO docDto = contaService.doc(transferenciaRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(docDto);
+    }
+    @PostMapping(value = "/ted")
+    public ResponseEntity<TransferenciaResponseDTO> ted(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+        TransferenciaResponseDTO tedDto = contaService.ted(transferenciaRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(tedDto);
+    }
 
 
 

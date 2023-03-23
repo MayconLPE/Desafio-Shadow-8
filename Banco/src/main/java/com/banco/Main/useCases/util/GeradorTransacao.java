@@ -16,13 +16,13 @@ public class GeradorTransacao {
         deposito.setValor(valor);
         deposito.setDataTransacao(data);
         deposito.setSaldoAntigo(saldoAtual);
+
         return deposito;
     }
 
     public static Transacao saque(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();
-
         Transacao saque = new Transacao();
         saque.setId(id);
         saque.setTipoTransacao(tipoTransacao);
@@ -33,10 +33,9 @@ public class GeradorTransacao {
         return saque;
     }
 
-    public static Transacao pix(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
+    public static Transacao gerarPixDocTed(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();
-
         Transacao pix = new Transacao();
         pix.setId(id);
         pix.setTipoTransacao(tipoTransacao);
