@@ -69,26 +69,4 @@ public class ContaController {
     }
 
 
-
-
-
-//    @GetMapping(value = "/extrato")
-//    public ResponseEntity<Page<ExtratoResponseDto>> extrato(@RequestParam(name = "numeroConta") Integer numeroConta,
-//                                                            @RequestParam(name = "digito") Integer digito,
-//                                                            @RequestParam(name = "agencia") Integer agencia,
-//                                                            @RequestParam(name = "filter", required = false) TipoTransacao tipoTransacao,
-//                                                            Pageable pageable){
-////        if (tipoTransacao == null) {
-//            Page<ExtratoResponseDto> extrato = contaService.findByIdConta(agencia, numeroConta, digito,pageable);
-//            return ResponseEntity.ok().body(extrato);
-////        }
-////        Page<ExtratoResponseDto> extrato = contaService.extratoNumeroContaTipoTransacao(numeroConta,digito,agencia,tipoTransacao,pageable);
-////        return ResponseEntity.ok().body(extrato);
-//    }
-
-
-
-
-
-
 }

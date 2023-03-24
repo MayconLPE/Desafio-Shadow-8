@@ -1,6 +1,7 @@
 package com.banco.Main.service.impl;
 
 import com.banco.Main.domain.Transacao;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.repository.TransacaoRepository;
 import com.banco.Main.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,6 @@ public class TransacaoServiceImpl implements TransacaoService {
     TransacaoRepository transacaoRepository;
 
 
-
     @Override
     public Transacao save(Transacao transacao) {
         return transacaoRepository.save(transacao);
@@ -25,34 +25,11 @@ public class TransacaoServiceImpl implements TransacaoService {
     public Page<Transacao> findAll(Pageable pageable) {
         return transacaoRepository.findAll(pageable);
     }
-
-
-
-
-    //
-    //
-
     @Override
     public Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable) {
         return transacaoRepository.findByContaOrigem(contaOrigem, pageable);
     }
 
-
-
-//    @Override
-//    public Page<Transacao> findByIdContaTipoTransacao(String id, TipoTransacao tipoTransacao, Pageable pageable) {
-//        return transacaoRepository.findByIdContaTipoTransacao(id, tipoTransacao, pageable);
-//    }
-
-
-//    @Override
-//    public Page<Transacao> findByNumeroConta(Integer contaOrigem, Pageable pageable) {
-//        return transacaoRepository.findByNumeroConta(contaOrigem, pageable);
-//    }
-//    @Override
-//    public Page<Transacao> findByNumeroContaTipoTransacao(Integer contaOrigem, TipoTransacao tipoTransacao, Pageable pageable) {
-//        return transacaoRepository.findByNumeroContaTipoTransacao(contaOrigem, tipoTransacao, pageable);
-//    }
 
 
 }

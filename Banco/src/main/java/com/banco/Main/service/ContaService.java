@@ -25,12 +25,5 @@ public interface ContaService {
     TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO);
     TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO);
 
-
-
-
-//    Page<ExtratoResponseDto> extratoNumeroConta(Integer numeroConta, Integer digito, Integer agencia, Pageable pageable);
-//    Page<ExtratoResponseDto> extratoNumeroContaTipoTransacao(Integer numeroConta, Integer digito, Integer agencia, TipoTransacao tipoTransacao, Pageable pageable);
-//    Page<ExtratoResponseDto> findByIdContaTipoTransacao(String id, TipoTransacao tipoTransacao, Pageable pageable);
-
     Optional<Conta> findById(String id);
 }

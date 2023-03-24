@@ -13,9 +13,10 @@ public class Exceptions extends ResponseEntityExceptionHandler {
     @ExceptionHandler(DocumentoInvalidoError.class)
     public ResponseEntity cpfInvalidoError(DocumentoInvalidoError e) {
         var date = new Date();
-        ResponseError responseError = new ResponseError(date, HttpStatus.BAD_REQUEST, "CPF Inválido");
+        ResponseError responseError = new ResponseError(date, HttpStatus.BAD_REQUEST, "Documento Inválido");
         return ResponseEntity.status(responseError.httpStatus).body(responseError);
     }
+
     @ExceptionHandler(ContaNaoEncontradaError.class)
     public ResponseEntity contaInvalida(ContaNaoEncontradaError e) {
         var date = new Date();

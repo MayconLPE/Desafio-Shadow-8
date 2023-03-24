@@ -11,8 +11,10 @@ import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.*;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -33,8 +35,6 @@ public class ContaServiceImpl implements ContaService {
     @Autowired
     ContaAdapter contaAdapter;
 
-//    @Autowired
-//    ModelMapper modelMapper;
 
     @Override
     public Conta save(Conta conta) {
@@ -213,23 +213,6 @@ public class ContaServiceImpl implements ContaService {
 
         return responseDto;
     }
-
-//    @Override
-//    public ExtratoResponseDto findByIdConta(Integer numeroConta) {
-//        return null;
-//    }
-
-
-    //
-    //
-
-
-
-//    @Override
-//    public Page<ExtratoResponseDto> findByIdContaTipoTransacao(String id, TipoTransacao tipoTransacao, Pageable pageable) {
-//        return null;
-//    }
-
 
 
 

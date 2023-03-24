@@ -1,6 +1,7 @@
 package com.banco.Main.controller;
 
 import com.banco.Main.domain.Transacao;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.service.TransacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,7 +20,6 @@ public class TransacaoController {
     public ResponseEntity<Page> findAllTrans(Pageable pageable) {
         Page<Transacao> trans = transacaoService.findAll(pageable);
         return ResponseEntity.ok().body(trans);
-
     }
     @GetMapping(value = "/{contaOrigem}")
     public ResponseEntity<Page<Transacao>> findByNumeroConta(@PathVariable(value = "contaOrigem") String contaOrigem, Pageable pageable) {
@@ -27,11 +27,6 @@ public class TransacaoController {
         return ResponseEntity.ok().body(transacao);
     }
 
-//    @PostMapping(value = "/salvar")
-//    public ResponseEntity<?> savarTransacao(@RequestBody Transacao trans) {
-//        Transacao transacao = this.transacaoService.save(trans);
-//        return new ResponseEntity<>(transacao, HttpStatus.OK);
-//    }
 
 
 }
