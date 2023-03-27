@@ -51,16 +51,22 @@ public class ContaServiceImpl implements ContaService {
         return contaAdapter.findByNumeroConta(numeroConta);
     }
     @Override
-    public Conta updateStatusContaAtivo(Integer numeroConta) {
+    public ResponseEntity<?> updateStatusContaAtivo(Integer numeroConta) {
         Conta c = findByNumeroConta(numeroConta);
+        if (c.getContaStatus() == ContaStatus.ATIVO) {
+            return new ResponseEntity<>("Conta já foi ATIVA", HttpStatus.PRECONDITION_FAILED);
+        }
         c.setContaStatus(ContaStatus.ATIVO);
-        return contaRepository.save(c);
+        return new ResponseEntity<>(contaRepository.save(c), HttpStatus.OK);
     }
     @Override
-    public Conta updateStatusContaBloqueado(Integer numeroConta) {
+    public ResponseEntity<?> updateStatusContaBloqueado(Integer numeroConta) {
         Conta c = findByNumeroConta(numeroConta);
+        if (c.getContaStatus() == ContaStatus.BLOQUEADO) {
+            return new ResponseEntity<>("Conta já foi BLOQUEADA", HttpStatus.PRECONDITION_FAILED);
+        }
         c.setContaStatus(ContaStatus.BLOQUEADO);
-        return contaRepository.save(c);
+        return new ResponseEntity<>(contaRepository.save(c), HttpStatus.OK);
     }
     @Override
     public Page<Conta> findAll(Pageable pageable) {

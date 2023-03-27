@@ -16,8 +16,8 @@ public interface ContaService {
     Conta save(Conta conta);
     Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto);
     Conta findByNumeroConta(Integer numeroConta);
-    Conta updateStatusContaAtivo(Integer numeroConta);
-    Conta updateStatusContaBloqueado(Integer numeroConta);
+    ResponseEntity<?> updateStatusContaAtivo(Integer numeroConta);
+    ResponseEntity<?> updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
     ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
     ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto);
