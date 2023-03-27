@@ -105,10 +105,16 @@ public class ContaServiceImpl implements ContaService {
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
         }
 
+        // Quantidade de saques:
         if (conta.getQuantidadeSaque() > 0) {
             conta.setQuantidadeSaque(conta.getQuantidadeSaque() - 1);
         } else {
             return new ResponseEntity<>("Quantidade de saque zerada", HttpStatus.PRECONDITION_FAILED);
+        }
+
+        // Saldo em conta zerado:
+        if (conta.getSaldo() <= 0) {
+            return new ResponseEntity<>("Saldo insuficiente para o saque", HttpStatus.PRECONDITION_FAILED);
         }
 
 
