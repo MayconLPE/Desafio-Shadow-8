@@ -123,7 +123,6 @@ public class ContaServiceImpl implements ContaService {
             return new ResponseEntity<>("Saldo insuficiente para o saque", HttpStatus.PRECONDITION_FAILED);
         }
 
-
         conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
 
         Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE, saqueRequestDto.getValorSaque(), conta.getSaldo());
@@ -147,12 +146,16 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO) {
+    public ResponseEntity<?> pix(TransferenciaRequestDTO transferenciaRequestDTO) {
 
         var responseDto = new TransferenciaResponseDTO();
         Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
         Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
 
+        // Saldo menor que o valor:
+        if (contaOringem.getSaldo() < transferenciaRequestDTO.getValor()) {
+            return new ResponseEntity<>("Saldo insuficiente para a tranferencia, PIX", HttpStatus.PRECONDITION_FAILED);
+        }
         Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
         transacao.setContaDestino(contaDestino.getId());
         transacao.setContaOrigem(contaOringem.getId());
@@ -172,8 +175,8 @@ public class ContaServiceImpl implements ContaService {
         responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
         responseDto.setValor(transferenciaRequestDTO.getValor());
         responseDto.setTipoTransacao(TipoTransacao.PIX);
-
-        return responseDto;
+//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
     @Override
     public TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO) {
@@ -232,7 +235,6 @@ public class ContaServiceImpl implements ContaService {
 
         return responseDto;
     }
-
 
 
     @Override

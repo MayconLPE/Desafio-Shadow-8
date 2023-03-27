@@ -21,7 +21,7 @@ public interface ContaService {
     Page<Conta> findAll(Pageable pageable);
     ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
     ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto);
-    TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO);
+    ResponseEntity<?> pix(TransferenciaRequestDTO transferenciaRequestDTO);
     TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO);
     TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO);
 
