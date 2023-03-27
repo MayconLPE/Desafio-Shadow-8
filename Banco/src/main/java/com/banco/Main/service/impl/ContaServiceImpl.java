@@ -151,7 +151,10 @@ public class ContaServiceImpl implements ContaService {
         var responseDto = new TransferenciaResponseDTO();
         Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
         Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
-
+        // Contas não ATIVAS.
+        if (!contaOringem.getContaStatus().equals(ContaStatus.ATIVO) || !contaDestino.getContaStatus().equals(ContaStatus.ATIVO)) {
+            return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
+        }
         // Saldo menor que o valor:
         if (contaOringem.getSaldo() < transferenciaRequestDTO.getValor()) {
             return new ResponseEntity<>("Saldo insuficiente para a tranferencia, PIX", HttpStatus.PRECONDITION_FAILED);
