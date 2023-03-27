@@ -19,7 +19,6 @@ public class GeradorTransacao {
 
         return deposito;
     }
-
     public static Transacao saque(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();
@@ -32,7 +31,6 @@ public class GeradorTransacao {
 
         return saque;
     }
-
     public static Transacao gerarPixDocTed(String id, TipoTransacao tipoTransacao, Double valor, Double saldoAtual) {
 
         LocalDateTime data = LocalDateTime.now();

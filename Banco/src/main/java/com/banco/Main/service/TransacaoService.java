@@ -13,4 +13,5 @@ public interface TransacaoService {
     Page<Transacao> findAll(Pageable pageable);
     Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable);
 
+
 }

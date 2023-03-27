@@ -105,6 +105,13 @@ public class ContaServiceImpl implements ContaService {
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
         }
 
+        if (conta.getQuantidadeSaque() > 0) {
+            conta.setQuantidadeSaque(conta.getQuantidadeSaque() - 1);
+        } else {
+            return new ResponseEntity<>("Quantidade de saque zerada", HttpStatus.PRECONDITION_FAILED);
+        }
+
+
         conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
 
         Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE, saqueRequestDto.getValorSaque(), conta.getSaldo());
