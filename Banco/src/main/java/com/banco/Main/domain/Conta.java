@@ -49,4 +49,6 @@ public class Conta implements Serializable {
     private Integer digito; // 1 Digitos
     private Double saldo = 0.0;
 
+    private Integer quantidadeSaque = 5;
+
 }

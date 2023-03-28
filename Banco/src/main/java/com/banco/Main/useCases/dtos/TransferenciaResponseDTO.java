@@ -30,12 +30,14 @@ public class TransferenciaResponseDTO {
 //    private String id;
 
     private Double valor;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataTransacao;
     private TipoTransacao tipoTransacao; /// PIX, TED, DOC, DEPOSITO;
     private Integer contaOrigem;
     private Integer contaDestino;
     private Double saldoAntigo;
     private Double saldoAtual;
+
 
 
 

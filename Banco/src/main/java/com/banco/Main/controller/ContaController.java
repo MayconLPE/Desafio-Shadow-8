@@ -1,6 +1,7 @@
 package com.banco.Main.controller;
 
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +28,12 @@ public class ContaController {
         return new ResponseEntity<>(contaService.findByNumeroConta(numeroConta), HttpStatus.OK);
     }
     @PatchMapping(value = "ativar/{numeroConta}") // Mudar statusConta para ATIVO.
-    public ResponseEntity<Conta> ativarConta(@PathVariable Integer numeroConta) {
-        return new ResponseEntity<>(contaService.updateStatusContaAtivo(numeroConta), HttpStatus.OK);
+    public ResponseEntity<?> ativarConta(@PathVariable Integer numeroConta) {
+        return contaService.updateStatusContaAtivo(numeroConta);
     }
     @PatchMapping(value = "bloquear/{numeroConta}") // Mudar statusConta para BLOQUEADO.
-    public ResponseEntity<Conta> bloquearConta(@PathVariable Integer numeroConta) {
-        return new ResponseEntity<>(contaService.updateStatusContaBloqueado(numeroConta), HttpStatus.OK);
+    public ResponseEntity<?> bloquearConta(@PathVariable Integer numeroConta) {
+        return contaService.updateStatusContaBloqueado(numeroConta);
     }
     @GetMapping(value = "/exibirContas") // Exibir todas as contas
     public ResponseEntity<Page> findAll(Pageable pageable) {
@@ -52,9 +53,20 @@ public class ContaController {
         return contaService.saque(saqueRequestDto);
     }
     @PostMapping(value = "/pix")
-    public ResponseEntity<TransferenciaResponseDTO> pix(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
-        TransferenciaResponseDTO pixDto = contaService.pix(transferenciaRequestDTO);
-        return ResponseEntity.status(HttpStatus.OK).body(pixDto);
+    public ResponseEntity<?> pix(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+//        TransferenciaResponseDTO pixDto = contaService.pix(transferenciaRequestDTO);
+        return contaService.pix(transferenciaRequestDTO);
     }
+    @PostMapping(value = "/doc")
+    public ResponseEntity<TransferenciaResponseDTO> doc(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+        TransferenciaResponseDTO docDto = contaService.doc(transferenciaRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(docDto);
+    }
+    @PostMapping(value = "/ted")
+    public ResponseEntity<TransferenciaResponseDTO> ted(@RequestBody TransferenciaRequestDTO transferenciaRequestDTO) {
+        TransferenciaResponseDTO tedDto = contaService.ted(transferenciaRequestDTO);
+        return ResponseEntity.status(HttpStatus.OK).body(tedDto);
+    }
+
 
 }

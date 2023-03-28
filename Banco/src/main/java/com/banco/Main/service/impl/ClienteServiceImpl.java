@@ -36,6 +36,7 @@ public class ClienteServiceImpl implements ClienteService {
     public RetornaClienteContaDto save(ClienteDto clienteDto) {
 
         var cpfValido = validarDocumentoUtil.validarCPF(clienteDto.getDocumento());
+        var cnpjVal = validarDocumentoUtil.validarCNPJ(clienteDto.getDocumento());
 
         if (cpfValido) {
 
@@ -68,6 +69,35 @@ public class ClienteServiceImpl implements ClienteService {
                     .nomeBanco(clienteDto.getNomeBanco())
                     .build();
 
+        } else if (cnpjVal) {
+            Cliente cliente = Cliente.builder()
+                    .nome(clienteDto.getNome())
+                    .documento(clienteDto.getDocumento())
+                    .tipoDocumento(clienteDto.getTipoDocumento())
+                    .telefone(clienteDto.getTelefone())
+                    .email(clienteDto.getEmail())
+                    .senha(clienteDto.getSenha())
+                    .tipoConta(clienteDto.getTipoConta())
+                    .nomeBanco(clienteDto.getNomeBanco())
+                    .build();
+
+            Cliente cliente1 = clienteAdapter.saveCliente(cliente);
+            var conta = geradorContaUtil.gerarContaInit(cliente1);
+            var contaCriada = contaAdapter.saveConta(conta);
+            var endereco = enderecoUtil.saveEndereco(cliente1,clienteDto);
+            var enderecoCriado = enderecoAdapter.save(endereco);
+
+            return RetornaClienteContaDto.builder()
+                    .idCliente(cliente.getId())
+                    .nome(clienteDto.getNome())
+                    .telefone(clienteDto.getTelefone())
+                    .email(clienteDto.getEmail())
+                    .tipoConta(clienteDto.getTipoConta())
+                    .numeroConta(contaCriada.getNumeroConta())
+                    .digito(contaCriada.getDigito())
+                    .agencia(contaCriada.getAgencia())
+                    .nomeBanco(clienteDto.getNomeBanco())
+                    .build();
         }
         throw new DocumentoInvalidoError();
     }

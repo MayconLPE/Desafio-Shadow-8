@@ -11,6 +11,7 @@ import com.banco.Main.useCases.adapters.ContaAdapter;
 import com.banco.Main.useCases.dtos.*;
 import com.banco.Main.useCases.util.GeradorContaUtil;
 import com.banco.Main.useCases.util.GeradorTransacao;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,7 +20,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -50,16 +51,22 @@ public class ContaServiceImpl implements ContaService {
         return contaAdapter.findByNumeroConta(numeroConta);
     }
     @Override
-    public Conta updateStatusContaAtivo(Integer numeroConta) {
+    public ResponseEntity<?> updateStatusContaAtivo(Integer numeroConta) {
         Conta c = findByNumeroConta(numeroConta);
+        if (c.getContaStatus() == ContaStatus.ATIVO) {
+            return new ResponseEntity<>("Conta já foi ATIVA", HttpStatus.PRECONDITION_FAILED);
+        }
         c.setContaStatus(ContaStatus.ATIVO);
-        return contaRepository.save(c);
+        return new ResponseEntity<>(contaRepository.save(c), HttpStatus.OK);
     }
     @Override
-    public Conta updateStatusContaBloqueado(Integer numeroConta) {
+    public ResponseEntity<?> updateStatusContaBloqueado(Integer numeroConta) {
         Conta c = findByNumeroConta(numeroConta);
+        if (c.getContaStatus() == ContaStatus.BLOQUEADO) {
+            return new ResponseEntity<>("Conta já foi BLOQUEADA", HttpStatus.PRECONDITION_FAILED);
+        }
         c.setContaStatus(ContaStatus.BLOQUEADO);
-        return contaRepository.save(c);
+        return new ResponseEntity<>(contaRepository.save(c), HttpStatus.OK);
     }
     @Override
     public Page<Conta> findAll(Pageable pageable) {
@@ -104,6 +111,18 @@ public class ContaServiceImpl implements ContaService {
             return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
         }
 
+        // Quantidade de saques:
+        if (conta.getQuantidadeSaque() > 0) {
+            conta.setQuantidadeSaque(conta.getQuantidadeSaque() - 1);
+        } else {
+            return new ResponseEntity<>("Quantidade de saque zerada", HttpStatus.PRECONDITION_FAILED);
+        }
+
+        // Saldo em conta zerado:
+        if (conta.getSaldo() <= 0) {
+            return new ResponseEntity<>("Saldo insuficiente para o saque", HttpStatus.PRECONDITION_FAILED);
+        }
+
         conta.setSaldo(conta.getSaldo() - saqueRequestDto.getValorSaque());
 
         Transacao transacao = GeradorTransacao.saque(conta.getId(), TipoTransacao.SAQUE, saqueRequestDto.getValorSaque(), conta.getSaldo());
@@ -127,13 +146,20 @@ public class ContaServiceImpl implements ContaService {
     }
 
     @Override
-    public TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO) {
+    public ResponseEntity<?> pix(TransferenciaRequestDTO transferenciaRequestDTO) {
+
         var responseDto = new TransferenciaResponseDTO();
         Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
         Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
-
-
-        Transacao transacao = GeradorTransacao.pix(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        // Contas não ATIVAS.
+        if (!contaOringem.getContaStatus().equals(ContaStatus.ATIVO) || !contaDestino.getContaStatus().equals(ContaStatus.ATIVO)) {
+            return new ResponseEntity<>("Conta não Ativa", HttpStatus.PRECONDITION_FAILED);
+        }
+        // Saldo menor que o valor:
+        if (contaOringem.getSaldo() < transferenciaRequestDTO.getValor()) {
+            return new ResponseEntity<>("Saldo insuficiente para a tranferencia, PIX", HttpStatus.PRECONDITION_FAILED);
+        }
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.PIX, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
         transacao.setContaDestino(contaDestino.getId());
         transacao.setContaOrigem(contaOringem.getId());
         responseDto.setSaldoAntigo(contaOringem.getSaldo());
@@ -147,17 +173,70 @@ public class ContaServiceImpl implements ContaService {
         contaRepository.save(contaOringem);
         transacaoService.save(transacao);
 
-        responseDto.setDataTransacao(transferenciaRequestDTO.getDataTransacao());
+        responseDto.setDataTransacao(LocalDateTime.now());
         responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
         responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
         responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.PIX);
+//        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
+    @Override
+    public TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO) {
+        var responseDto = new TransferenciaResponseDTO();
+        Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
+        Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
+
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.DOC, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        transacao.setContaDestino(contaDestino.getId());
+        transacao.setContaOrigem(contaOringem.getId());
+        responseDto.setSaldoAntigo(contaOringem.getSaldo());
+
+        contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
+        contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
+        responseDto.setSaldoAtual(contaOringem.getSaldo());
+        transacao.setSaldoAtual(contaOringem.getSaldo());
+
+        contaRepository.save(contaDestino);
+        contaRepository.save(contaOringem);
+        transacaoService.save(transacao);
+
+        responseDto.setDataTransacao(LocalDateTime.now());
+        responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
+        responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
+        responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.DOC);
 
         return responseDto;
     }
 
     @Override
-    public Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable) {
-        return null;
+    public TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO) {
+        var responseDto = new TransferenciaResponseDTO();
+        Conta contaOringem = findByNumeroConta(transferenciaRequestDTO.getContaOrigem());
+        Conta contaDestino = findByNumeroConta(transferenciaRequestDTO.getContaDestino());
+
+        Transacao transacao = GeradorTransacao.gerarPixDocTed(contaDestino.getId(), TipoTransacao.TED, transferenciaRequestDTO.getValor(), contaOringem.getSaldo());
+        transacao.setContaDestino(contaDestino.getId());
+        transacao.setContaOrigem(contaOringem.getId());
+        responseDto.setSaldoAntigo(contaOringem.getSaldo());
+
+        contaOringem.setSaldo(contaOringem.getSaldo() - transferenciaRequestDTO.getValor());
+        contaDestino.setSaldo(contaDestino.getSaldo() + transferenciaRequestDTO.getValor());
+        responseDto.setSaldoAtual(contaOringem.getSaldo());
+        transacao.setSaldoAtual(contaOringem.getSaldo());
+
+        contaRepository.save(contaDestino);
+        contaRepository.save(contaOringem);
+        transacaoService.save(transacao);
+
+        responseDto.setDataTransacao(LocalDateTime.now());
+        responseDto.setContaOrigem(transferenciaRequestDTO.getContaOrigem());
+        responseDto.setContaDestino(transferenciaRequestDTO.getContaDestino());
+        responseDto.setValor(transferenciaRequestDTO.getValor());
+        responseDto.setTipoTransacao(TipoTransacao.TED);
+
+        return responseDto;
     }
 
 
@@ -166,9 +245,6 @@ public class ContaServiceImpl implements ContaService {
         var res = contaRepository.findById(id);
         return contaRepository.findById(id);
     }
-
-
-
 
 
 

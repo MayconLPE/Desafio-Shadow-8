@@ -2,6 +2,8 @@ package com.banco.Main.service;
 
 
 import com.banco.Main.domain.Conta;
+import com.banco.Main.domain.Transacao;
+import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,20 +16,14 @@ public interface ContaService {
     Conta save(Conta conta);
     Conta gerarNovaConta(CriarNovaContaDto criarNovaContaDto);
     Conta findByNumeroConta(Integer numeroConta);
-    Conta updateStatusContaAtivo(Integer numeroConta);
-    Conta updateStatusContaBloqueado(Integer numeroConta);
+    ResponseEntity<?> updateStatusContaAtivo(Integer numeroConta);
+    ResponseEntity<?> updateStatusContaBloqueado(Integer numeroConta);
     Page<Conta> findAll(Pageable pageable);
     ResponseEntity<?> deposito(DepositoRequestDto depositoRequestDto);
     ResponseEntity<?> saque(SaqueRequestDto saqueRequestDto);
-    TransferenciaResponseDTO pix(TransferenciaRequestDTO transferenciaRequestDTO);
-
-    // DOC
-
-    // TED
-
-
-    Page<ExtratoResponseDto> extrato(Integer numeroConta, Pageable pageable);
+    ResponseEntity<?> pix(TransferenciaRequestDTO transferenciaRequestDTO);
+    TransferenciaResponseDTO doc(TransferenciaRequestDTO transferenciaRequestDTO);
+    TransferenciaResponseDTO ted(TransferenciaRequestDTO transferenciaRequestDTO);
 
     Optional<Conta> findById(String id);
-
 }
