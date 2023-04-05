@@ -4,6 +4,7 @@ import com.banco.Main.domain.Transacao;
 import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.repository.TransacaoRepository;
 import com.banco.Main.service.TransacaoService;
+import com.banco.Main.useCases.dtos.TransferenciaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,10 +27,9 @@ public class TransacaoServiceImpl implements TransacaoService {
         return transacaoRepository.findAll(pageable);
     }
     @Override
-    public Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable) {
-        return transacaoRepository.findByContaOrigem(contaOrigem, pageable);
+    public Page<Transacao> findByContaOrigem(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable) {
+        return transacaoRepository.findByContaOrigemAndTipoTransacao(contaOrigem, tipoTransacao, pageable);
     }
-
 
 
 

@@ -5,6 +5,7 @@
       <list>
         <option value="$PROJECT_DIR$/Main/pom.xml" />
         <option value="$PROJECT_DIR$/Banco/pom.xml" />
+        <option value="$PROJECT_DIR$/kafkaConsumer/pom.xml" />
       </list>
     </option>
   </component>

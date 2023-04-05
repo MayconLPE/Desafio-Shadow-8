@@ -3,6 +3,7 @@ package com.banco.Main.controller;
 import com.banco.Main.domain.Transacao;
 import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.service.TransacaoService;
+import com.banco.Main.useCases.dtos.TransferenciaResponseDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +22,15 @@ public class TransacaoController {
         Page<Transacao> trans = transacaoService.findAll(pageable);
         return ResponseEntity.ok().body(trans);
     }
-    @GetMapping(value = "/{contaOrigem}")
-    public ResponseEntity<Page<Transacao>> findByNumeroConta(@PathVariable(value = "contaOrigem") String contaOrigem, Pageable pageable) {
-        Page<Transacao> transacao = transacaoService.findByContaOrigem(contaOrigem, pageable);
+    @GetMapping(value = "/extrato")
+    public ResponseEntity<Page<Transacao>> findByNumeroConta(@RequestParam String contaOrigem,
+                                                             @RequestParam(required = false) TipoTransacao tipoTransacao,
+                                                             Pageable pageable) {
+        Page<Transacao> transacao = transacaoService.findByContaOrigem(contaOrigem, tipoTransacao,pageable);
         return ResponseEntity.ok().body(transacao);
     }
+
+
 
 
 }

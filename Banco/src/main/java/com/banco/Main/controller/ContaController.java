@@ -1,7 +1,7 @@
 package com.banco.Main.controller;
 
+
 import com.banco.Main.domain.Conta;
-import com.banco.Main.domain.infoTransacao.TipoTransacao;
 import com.banco.Main.service.ContaService;
 import com.banco.Main.useCases.dtos.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +67,12 @@ public class ContaController {
         TransferenciaResponseDTO tedDto = contaService.ted(transferenciaRequestDTO);
         return ResponseEntity.status(HttpStatus.OK).body(tedDto);
     }
+
+//    @PostMapping(value = "/kafka")
+//    public ResponseEntity<String> salvarDeposito(@RequestBody DepositoData depositoData) {
+//        registrarEventoService.adicionarEvento("SalvarDeposito", depositoData);
+//        return ResponseEntity.ok("Sucesso");
+//    }
 
 
 }
