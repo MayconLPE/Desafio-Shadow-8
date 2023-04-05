@@ -12,7 +12,8 @@ public interface TransacaoService {
 
     Transacao save(Transacao transacao);
     Page<Transacao> findAll(Pageable pageable);
-    Page<Transacao> findByContaOrigem(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable);
+    Page<Transacao> extratoContaOrigem(String contaOrigem, Pageable pageable);
+    Page<Transacao> extratoContaOrigemAndTipoTransacao(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable);
 
 
 }

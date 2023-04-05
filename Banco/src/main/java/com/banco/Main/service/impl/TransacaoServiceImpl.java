@@ -26,8 +26,14 @@ public class TransacaoServiceImpl implements TransacaoService {
     public Page<Transacao> findAll(Pageable pageable) {
         return transacaoRepository.findAll(pageable);
     }
+
     @Override
-    public Page<Transacao> findByContaOrigem(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable) {
+    public Page<Transacao> extratoContaOrigem(String contaOrigem, Pageable pageable) {
+        return transacaoRepository.findByContaOrigem(contaOrigem, pageable);
+    }
+
+    @Override
+    public Page<Transacao> extratoContaOrigemAndTipoTransacao(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable) {
         return transacaoRepository.findByContaOrigemAndTipoTransacao(contaOrigem, tipoTransacao, pageable);
     }
 

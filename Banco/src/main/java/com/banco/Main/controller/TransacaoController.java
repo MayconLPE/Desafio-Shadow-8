@@ -17,20 +17,19 @@ import java.util.List;
 public class TransacaoController {
     @Autowired
     TransacaoService transacaoService;
-    @GetMapping(value = "/exibirTransacoes") // Exibir todas as Transações
+    @GetMapping(value = "/exibirTransacoes") // Exibir todas as Transações.
     public ResponseEntity<Page> findAllTrans(Pageable pageable) {
         Page<Transacao> trans = transacaoService.findAll(pageable);
         return ResponseEntity.ok().body(trans);
     }
-    @GetMapping(value = "/extrato")
-    public ResponseEntity<Page<Transacao>> findByNumeroConta(@RequestParam String contaOrigem,
-                                                             @RequestParam(required = false) TipoTransacao tipoTransacao,
-                                                             Pageable pageable) {
-        Page<Transacao> transacao = transacaoService.findByContaOrigem(contaOrigem, tipoTransacao,pageable);
+    @GetMapping(value = "/extrato") // Extrato por conta e tipoTransacao.
+    public ResponseEntity<Page<Transacao>> extrato(@RequestParam String contaOrigem,
+                                                   @RequestParam(required = false) TipoTransacao tipoTransacao, Pageable pageable) {
+        if (tipoTransacao == null) {
+            Page<Transacao> transacao = transacaoService.extratoContaOrigem(contaOrigem, pageable);
+            return ResponseEntity.ok().body(transacao);
+        }
+        Page<Transacao> transacao = transacaoService.extratoContaOrigemAndTipoTransacao(contaOrigem, tipoTransacao,pageable);
         return ResponseEntity.ok().body(transacao);
     }
-
-
-
-
 }

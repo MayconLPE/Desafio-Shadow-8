@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface TransacaoRepository extends JpaRepository<Transacao, String> {
 
+    Page<Transacao> findByContaOrigem(String contaOrigem, Pageable pageable);
     Page<Transacao> findByContaOrigemAndTipoTransacao(String contaOrigem, TipoTransacao tipoTransacao, Pageable pageable); // buscar id da contaOrigem
 
 
