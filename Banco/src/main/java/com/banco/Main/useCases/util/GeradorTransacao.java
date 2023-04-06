@@ -13,7 +13,7 @@ public class GeradorTransacao {
         Transacao deposito = new Transacao();
         deposito.setId(id);
         deposito.setTipoTransacao(tipoTransacao);
-        deposito.setValor(valor);
+        deposito.setValorTransacao(valor);
         deposito.setDataTransacao(data);
         deposito.setSaldoAntigo(saldoAtual);
 
@@ -25,7 +25,7 @@ public class GeradorTransacao {
         Transacao saque = new Transacao();
         saque.setId(id);
         saque.setTipoTransacao(tipoTransacao);
-        saque.setValor(valor);
+        saque.setValorTransacao(valor);
         saque.setDataTransacao(data);
         saque.setSaldoAntigo(saldoAtual);
 
@@ -37,7 +37,7 @@ public class GeradorTransacao {
         Transacao pix = new Transacao();
         pix.setId(id);
         pix.setTipoTransacao(tipoTransacao);
-        pix.setValor(valor);
+        pix.setValorTransacao(valor);
         pix.setDataTransacao(data);
         pix.setSaldoAntigo(saldoAtual);
 

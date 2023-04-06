@@ -1,6 +1,7 @@
 package com.banco.Main.useCases.dtos;
 
 import com.banco.Main.domain.infoTransacao.TipoTransacao;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.*;
@@ -17,6 +18,7 @@ public class ExtratoRequestDto {
     private String id;
     private TipoTransacao tipoTransacao;
     private Double valor;
+    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataTransacao;
     private Integer contaOrigem;
     private Integer contaDestino;

@@ -14,6 +14,6 @@ import lombok.Setter;
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 public class ContaDto {
 
-    private String id;
+    private String idConta;
     private Integer numeroConta;
 }

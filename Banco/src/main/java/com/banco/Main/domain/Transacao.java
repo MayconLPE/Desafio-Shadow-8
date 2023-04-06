@@ -27,7 +27,7 @@ public class Transacao {
     private String id;
 //    @Min(value = 0L, message = "Insira um valor positivo")
     @PositiveOrZero
-    private Double valor;
+    private Double valorTransacao;
 
     @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime dataTransacao;

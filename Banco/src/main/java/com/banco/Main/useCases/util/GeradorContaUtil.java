@@ -30,6 +30,7 @@ public class GeradorContaUtil {
                 .numeroConta(numeroContaRandom)
                 .digito(1)
                 .saldo(50.0)
+                .quantidadeSaquesDisponiveis(5)
                 .build();
         return conta;
     }
@@ -48,6 +49,7 @@ public class GeradorContaUtil {
                 .numeroConta(numeroContaRandom)
                 .digito(2)
                 .saldo(0.0)
+                .quantidadeSaquesDisponiveis(5)
                 .build();
         return conta;
 

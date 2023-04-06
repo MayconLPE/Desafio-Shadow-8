@@ -1,7 +1,6 @@
 package com.banco.Main.domain;
 
 import com.banco.Main.domain.infoConta.ContaStatus;
-import com.banco.Main.domain.infoConta.NomeBanco;
 import com.banco.Main.domain.infoConta.TipoConta;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -25,7 +24,7 @@ public class Conta implements Serializable {
     @Id
     @GenericGenerator(name="UUIDGenerator",strategy = "uuid")
     @GeneratedValue(generator = "UUIDGenerator")
-    private String id;
+    private String idConta;
     @Column(nullable = false)
     @NotBlank
     private String idCliente;
@@ -49,6 +48,6 @@ public class Conta implements Serializable {
     private Integer digito; // 1 Digitos
     private Double saldo = 0.0;
 
-    private Integer quantidadeSaque = 5;
+    private Integer quantidadeSaquesDisponiveis;
 
 }
