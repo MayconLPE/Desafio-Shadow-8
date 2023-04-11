@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Banco/Banco.iml" filepath="$PROJECT_DIR$/Banco/Banco.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/Desafio-Shadow-8.iml" filepath="$PROJECT_DIR$/.idea/Desafio-Shadow-8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Banco/banco.iml" filepath="$PROJECT_DIR$/Banco/banco.iml" />
       <module fileurl="file://$PROJECT_DIR$/kafkaConsumer/kafkaConsumer.iml" filepath="$PROJECT_DIR$/kafkaConsumer/kafkaConsumer.iml" />
     </modules>
   </component>
