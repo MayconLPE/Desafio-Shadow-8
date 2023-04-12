@@ -16,6 +16,7 @@ import java.util.ArrayList;
 @EnableSwagger2
 @Configuration
 public class SwaggerConfig {
+//    http://localhost:8080/swagger-ui.html
     private ApiInfo metaInfo() {
 
         ApiInfo apiInfo = new ApiInfo(
