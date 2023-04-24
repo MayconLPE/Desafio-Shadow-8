@@ -26,8 +26,6 @@ public class ClienteDto {
     private String telefone;
     private String email;
     private String senha;
-//    @JsonFormat(pattern = "dd-MM-yyyy HH:mm:ss")
-//    private LocalDateTime registroCadastro;
     private EnderecoDto endereco;
     private NomeBanco nomeBanco; // BANCOPE, BANCOSP;
 }
